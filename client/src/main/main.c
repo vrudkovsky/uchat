@@ -5,8 +5,12 @@ int main(int argc, char **argv) {
 
     start_error(argc, argv);
     connection_establisher(mx_atoi(argv[1]), argv[2]);
-    
-    log_reg_window();
-    
+
+    main_data.app_status = 1;
+    while (main_data.app_status != 3)
+        switch (main_data.app_status) {
+            case 1: log_reg_window(); break;
+            case 2: chat_window(); main_data.app_status = 3; break;
+        }
     return 0;
 }
