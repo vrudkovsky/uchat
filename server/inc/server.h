@@ -30,6 +30,6 @@ void send_responce(int sock, cJSON *j_responce);
 bool mx_create_username_password_login(char *str_1, char *str_2, char *str_3);
 bool mx_find_email(char *email);
 bool mx_find_username(char *username);
-bool mx_find_password(char *pass);
+bool mx_find_password(char *pass, char *login);
 
 #endif

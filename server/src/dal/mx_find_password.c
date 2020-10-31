@@ -34,7 +34,7 @@ static void showDB() {
     while(rc == SQLITE_SCHEMA);
 }
 
-static bool find_password(char *pass) {
+static bool find_password(char *pass, char *login) {
 	int rc = 0;
     printf("\n%s                                 email", pass);
     char zSql[]="SELECT * FROM users";
@@ -43,9 +43,11 @@ static bool find_password(char *pass) {
             sqlite3_prepare(db, zSql, -1, &stmt, 0);
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 printf("%s\n", sqlite3_column_text(stmt,3));
-                if (strcmp((const char*)sqlite3_column_text(stmt,2), pass) == 0 ) {
+                if (strcmp((const char*)sqlite3_column_text(stmt,1), login) == 0 ) {
+                    if (strcmp((const char*)sqlite3_column_text(stmt,2), pass) == 0 ) {
                     printf("<--!!!!! Inside search function !!!!->");
                     return 1;
+                    }
                 }
             }
             rc = sqlite3_finalize(stmt);
@@ -58,11 +60,11 @@ static void endDB(){
     sqlite3_close(db);
 }
 
-bool mx_find_password(char *pass) {
+bool mx_find_password(char *pass, char *login) {
     printf("%s 11111111111111111111111111", pass);
 	startDB();
 	showDB();
-	if(find_password(pass) != 0)
+	if(find_password(pass, login) != 0)
 		return 1;
 	showDB();
     endDB();
