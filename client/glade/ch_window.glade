@@ -21,8 +21,8 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">YouChat</property>
     <property name="window_position">center-always</property>
-    <property name="default_width">850</property>
-    <property name="default_height">560</property>
+    <property name="default_width">-1</property>
+    <property name="default_height">-1</property>
     <child type="titlebar">
       <placeholder/>
     </child>
@@ -52,7 +52,7 @@
             <property name="pixbuf">uchat_graphics/logout_frame.png</property>
           </object>
           <packing>
-            <property name="y">481</property>
+            <property name="y">480</property>
           </packing>
         </child>
         <child>
@@ -133,8 +133,8 @@
         </child>
         <child>
           <object class="GtkStack" id="chats_contacts_stack">
-            <property name="width_request">236</property>
-            <property name="height_request">560</property>
+            <property name="width_request">230</property>
+            <property name="height_request">559</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="transition_type">crossfade</property>
@@ -152,14 +152,14 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkListBox">
-                    <property name="width_request">234</property>
-                    <property name="height_request">506</property>
+                  <object class="GtkListBox" id="contact_list_box">
+                    <property name="width_request">23</property>
+                    <property name="height_request">505</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkListBoxRow">
-                        <property name="width_request">-1</property>
+                        <property name="width_request">236</property>
                         <property name="height_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -177,10 +177,11 @@
                                 <property name="height_request">-1</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="pixbuf">uchat_graphics/contac_field_test1.png</property>
+                                <property name="pixbuf">uchat_graphics/contac_field_test3.png</property>
                               </object>
                               <packing>
-                                <property name="x">-4</property>
+                                <property name="x">15</property>
+                                <property name="y">7</property>
                               </packing>
                             </child>
                             <child>
@@ -224,7 +225,7 @@
                     </child>
                     <child>
                       <object class="GtkListBoxRow">
-                        <property name="width_request">-1</property>
+                        <property name="width_request">236</property>
                         <property name="height_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -242,10 +243,11 @@
                                 <property name="height_request">-1</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="pixbuf">uchat_graphics/contac_field_test1.png</property>
+                                <property name="pixbuf">uchat_graphics/contac_field_test3.png</property>
                               </object>
                               <packing>
-                                <property name="x">-4</property>
+                                <property name="x">15</property>
+                                <property name="y">7</property>
                               </packing>
                             </child>
                             <child>
@@ -297,14 +299,14 @@
                     <property name="width_request">-1</property>
                     <property name="height_request">-1</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can_focus">True</property>
                     <property name="has_frame">False</property>
-                    <property name="width_chars">20</property>
-                    <property name="max_width_chars">20</property>
+                    <property name="width_chars">18</property>
+                    <property name="max_width_chars">18</property>
                   </object>
                   <packing>
                     <property name="x">22</property>
-                    <property name="y">16</property>
+                    <property name="y">14</property>
                   </packing>
                 </child>
               </object>
@@ -329,7 +331,7 @@
                 <child>
                   <object class="GtkListBox">
                     <property name="width_request">230</property>
-                    <property name="height_request">506</property>
+                    <property name="height_request">505</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -360,12 +362,12 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="has_frame">False</property>
-                    <property name="width_chars">20</property>
-                    <property name="max_width_chars">20</property>
+                    <property name="width_chars">18</property>
+                    <property name="max_width_chars">18</property>
                   </object>
                   <packing>
                     <property name="x">22</property>
-                    <property name="y">16</property>
+                    <property name="y">14</property>
                   </packing>
                 </child>
               </object>
@@ -386,6 +388,9 @@
                 <property name="position">2</property>
               </packing>
             </child>
+            <style>
+              <class name="list_ch_cont"/>
+            </style>
           </object>
           <packing>
             <property name="x">180</property>
@@ -417,7 +422,7 @@
             <property name="label" translatable="yes">mdudnyk</property>
             <attributes>
               <attribute name="font-desc" value="Futura Bold 16"/>
-              <attribute name="foreground" value="#fff"/>
+              <attribute name="foreground" value="#ffffffffffff"/>
             </attributes>
           </object>
           <packing>
@@ -428,7 +433,7 @@
         <child>
           <object class="GtkStack" id="main_info_stack">
             <property name="width_request">490</property>
-            <property name="height_request">560</property>
+            <property name="height_request">559</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="transition_type">crossfade</property>
@@ -527,7 +532,7 @@
                     <property name="max_width_chars">30</property>
                     <attributes>
                       <attribute name="font-desc" value="Helvetica Neue Bold 22"/>
-                      <attribute name="foreground" value="#fff"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
                     </attributes>
                   </object>
                   <packing>
@@ -546,7 +551,7 @@
                     <property name="max_width_chars">30</property>
                     <attributes>
                       <attribute name="font-desc" value="Helvetica Neue 20"/>
-                      <attribute name="foreground" value="#fff"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
                     </attributes>
                   </object>
                   <packing>
@@ -565,7 +570,7 @@
                     <property name="max_width_chars">30</property>
                     <attributes>
                       <attribute name="font-desc" value="Helvetica Neue 21"/>
-                      <attribute name="foreground" value="#fff"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
                     </attributes>
                   </object>
                   <packing>
@@ -593,7 +598,7 @@
             </child>
           </object>
           <packing>
-            <property name="x">430</property>
+            <property name="x">429</property>
           </packing>
         </child>
         <child>
@@ -612,4 +617,3 @@
     </child>
   </object>
 </interface>
-
