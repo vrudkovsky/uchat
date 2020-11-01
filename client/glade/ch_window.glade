@@ -133,7 +133,7 @@
         </child>
         <child>
           <object class="GtkStack" id="chats_contacts_stack">
-            <property name="width_request">230</property>
+            <property name="width_request">236</property>
             <property name="height_request">560</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -153,13 +153,13 @@
                 </child>
                 <child>
                   <object class="GtkListBox">
-                    <property name="width_request">230</property>
+                    <property name="width_request">234</property>
                     <property name="height_request">506</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkListBoxRow">
-                        <property name="width_request">230</property>
+                        <property name="width_request">-1</property>
                         <property name="height_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -167,14 +167,14 @@
                         <property name="valign">center</property>
                         <child>
                           <object class="GtkFixed">
-                            <property name="width_request">226</property>
+                            <property name="width_request">-1</property>
                             <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkImage">
                                 <property name="width_request">-1</property>
-                                <property name="height_request">70</property>
+                                <property name="height_request">-1</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="pixbuf">uchat_graphics/contac_field_test1.png</property>
@@ -193,7 +193,7 @@
                                 <property name="width_chars">19</property>
                                 <property name="max_width_chars">20</property>
                                 <attributes>
-                                  <attribute name="font-desc" value="Ubuntu Bold 12"/>
+                                  <attribute name="font-desc" value="Helvetica Neue 22"/>
                                 </attributes>
                               </object>
                               <packing>
@@ -209,7 +209,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">VB</property>
                                 <attributes>
-                                  <attribute name="font-desc" value="Ubuntu Light 18"/>
+                                  <attribute name="font-desc" value="Helvetica Neue 28"/>
                                   <attribute name="foreground" value="#88888a8a8585"/>
                                 </attributes>
                               </object>
@@ -224,7 +224,7 @@
                     </child>
                     <child>
                       <object class="GtkListBoxRow">
-                        <property name="width_request">230</property>
+                        <property name="width_request">-1</property>
                         <property name="height_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -232,14 +232,14 @@
                         <property name="valign">center</property>
                         <child>
                           <object class="GtkFixed">
-                            <property name="width_request">226</property>
+                            <property name="width_request">-1</property>
                             <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkImage">
                                 <property name="width_request">-1</property>
-                                <property name="height_request">70</property>
+                                <property name="height_request">-1</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="pixbuf">uchat_graphics/contac_field_test1.png</property>
@@ -258,7 +258,7 @@
                                 <property name="width_chars">19</property>
                                 <property name="max_width_chars">20</property>
                                 <attributes>
-                                  <attribute name="font-desc" value="Ubuntu Bold 12"/>
+                                  <attribute name="font-desc" value="Helvetica Neue 22"/>
                                 </attributes>
                               </object>
                               <packing>
@@ -274,7 +274,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">VR</property>
                                 <attributes>
-                                  <attribute name="font-desc" value="Ubuntu Light 18"/>
+                                  <attribute name="font-desc" value="Helvetica Neue 28"/>
                                   <attribute name="foreground" value="#88888a8a8585"/>
                                 </attributes>
                               </object>
@@ -394,12 +394,12 @@
         <child>
           <object class="GtkLabel">
             <property name="width_request">100</property>
-            <property name="height_request">80</property>
+            <property name="height_request">85</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">MD</property>
             <attributes>
-              <attribute name="font-desc" value="Ubuntu Medium 34"/>
+              <attribute name="font-desc" value="Futura Bold 40"/>
               <attribute name="foreground" value="#88888a8a8585"/>
             </attributes>
           </object>
@@ -416,7 +416,8 @@
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">mdudnyk</property>
             <attributes>
-              <attribute name="font-desc" value="Ubuntu Bold 12"/>
+              <attribute name="font-desc" value="Futura Bold 16"/>
+              <attribute name="foreground" value="#fff"/>
             </attributes>
           </object>
           <packing>
@@ -506,7 +507,8 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">VR</property>
                     <attributes>
-                      <attribute name="font-desc" value="Ubuntu Medium 100"/>
+                      <attribute name="font-desc" value="Futura bold 118"/>
+                      <attribute name="foreground" value="#88888a8a8585"/>
                     </attributes>
                   </object>
                   <packing>
@@ -524,11 +526,12 @@
                     <property name="width_chars">30</property>
                     <property name="max_width_chars">30</property>
                     <attributes>
-                      <attribute name="font-desc" value="Ubuntu Medium 15"/>
+                      <attribute name="font-desc" value="Helvetica Neue Bold 22"/>
+                      <attribute name="foreground" value="#fff"/>
                     </attributes>
                   </object>
                   <packing>
-                    <property name="x">112</property>
+                    <property name="x">128</property>
                     <property name="y">287</property>
                   </packing>
                 </child>
@@ -542,12 +545,13 @@
                     <property name="width_chars">30</property>
                     <property name="max_width_chars">30</property>
                     <attributes>
-                      <attribute name="font-desc" value="Ubuntu Medium 12"/>
+                      <attribute name="font-desc" value="Helvetica Neue 20"/>
+                      <attribute name="foreground" value="#fff"/>
                     </attributes>
                   </object>
                   <packing>
-                    <property name="x">111</property>
-                    <property name="y">319</property>
+                    <property name="x">128</property>
+                    <property name="y">315</property>
                   </packing>
                 </child>
                 <child>
@@ -560,11 +564,12 @@
                     <property name="width_chars">30</property>
                     <property name="max_width_chars">30</property>
                     <attributes>
-                      <attribute name="font-desc" value="Ubuntu Medium 13"/>
+                      <attribute name="font-desc" value="Helvetica Neue 21"/>
+                      <attribute name="foreground" value="#fff"/>
                     </attributes>
                   </object>
                   <packing>
-                    <property name="x">111</property>
+                    <property name="x">128</property>
                     <property name="y">341</property>
                   </packing>
                 </child>

@@ -1,0 +1,52 @@
+
+/********************* Colour reference chart****************
+*************************** comment ********* colour ******** 
+
+box background colour       bbg              #131313
+box background light col    bbg              #211927
+box filldes colour          bfc              #3e3e3e
+box border colour           bb               #ffffff
+box text colour             bt               #ffffff
+
+*/
+
+/* window {
+    background-color: rgb(70, 73, 73);
+} */
+
+list {
+	color: white;
+	background-color: #343434;
+	border-color: #222222; }
+	list:backdrop {
+	  color: #d7d7d7;
+	  background-color: #373737;
+	  border-color: #282828; }
+	list row {
+	  padding: 2px; }
+
+row {
+	transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+	row:hover {
+	  transition: none; }
+	row:backdrop {
+	  transition: 100ms ease-out; }
+	row.activatable.has-open-popup, row.activatable:hover {
+	  background-color: rgba(247, 247, 247, 0.05); }
+	row.activatable:active {
+	  box-shadow: inset 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+	  transition: 200ms;
+	  background-color: #202433; }
+	row.activatable:backdrop:hover {
+	  background-color: transparent; }
+	row.activatable:selected:active {
+	  box-shadow: inset 0 2px 3px -1px rgba(0, 0, 0, 0.5); }
+	row.activatable:selected.has-open-popup, row.activatable:selected:hover {
+	  background-color: #202433; }
+	row.activatable:selected:backdrop {
+	  background-color: #535150; }
+
+	row:selected {
+		background-color: #202433;
+		box-shadow: inset 0 2px 3px -1px rgba(0, 0, 0, 0.5);
+	}
