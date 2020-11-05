@@ -84,8 +84,8 @@
                 <property name="width_request">100</property>
                 <property name="height_request">87</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <signal name="activate" handler="on_chats_row_activate" swapped="no"/>
+                <property name="can_focus">True</property>
+                <signal name="grab-focus" handler="focus_on_chats" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
@@ -100,8 +100,8 @@
                 <property name="width_request">100</property>
                 <property name="height_request">87</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <signal name="activate" handler="on_contacts_row_activate" swapped="no"/>
+                <property name="can_focus">True</property>
+                <signal name="grab-focus" handler="focus_on_contacts" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
@@ -138,6 +138,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="transition_type">crossfade</property>
+            <property name="transition_duration">100</property>
             <child>
               <object class="GtkFixed" id="contacts_list">
                 <property name="visible">True</property>

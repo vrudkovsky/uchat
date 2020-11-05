@@ -19,10 +19,14 @@
 struct chat_window {
     GtkWidget *ch_window;
     GtkBuilder *builder;
+    GtkWidget *main_list;
+    GtkWidget *chats_row;
+    GtkWidget *contacts_row;
     GtkStack *chats_contacts_stack;
-    GtkWidget *contacts_list;
     GtkWidget *chats_list;
-}           chat;
+    GtkWidget *contacts_list;
+    GtkWidget *contact_list_box;
+}               chat;
 
 struct main_info {
     int app_status;
@@ -59,7 +63,8 @@ void log_reg_widgets(void);
 void log_reg_actions(void);
 int login_request(void);
 int reg_request(void);
-void chat_window(void);
+void chat_window_main(void);
+void chat_window_init(void);
 
 
 #endif

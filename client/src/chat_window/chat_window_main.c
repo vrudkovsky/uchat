@@ -1,14 +1,9 @@
 #include "client.h"
 
-void chat_window(void) {
+void chat_window_main(void) {
     gtk_init(NULL, NULL);
 
-    chat.builder = gtk_builder_new();
-    chat.builder = gtk_builder_new_from_file("glade/ch_window.glade");
-    chat.ch_window = GTK_WIDGET(gtk_builder_get_object(chat.builder, "ch_window"));
-    chat.chats_contacts_stack = GTK_STACK(gtk_builder_get_object(chat.builder, "chats_contacts_stack"));
-    chat.contacts_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contacts_list"));
-    chat.chats_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "chats_list"));
+    chat_window_init();
 
     GdkScreen * display = gdk_screen_get_default();
     GtkCssProvider *css = gtk_css_provider_new();
@@ -17,8 +12,7 @@ void chat_window(void) {
     
     g_signal_connect(chat.ch_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     gtk_builder_connect_signals(chat.builder, NULL);
-
-    gtk_widget_show(chat.ch_window);
+    gtk_widget_show_all(chat.ch_window);
     gtk_main();
 }
 
