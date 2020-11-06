@@ -4,6 +4,8 @@ void chat_window_main(void) {
     gtk_init(NULL, NULL);
 
     chat_window_init();
+    start_requests();
+    work_with_contacts();
 
     GdkScreen * display = gdk_screen_get_default();
     GtkCssProvider *css = gtk_css_provider_new();
@@ -16,10 +18,3 @@ void chat_window_main(void) {
     gtk_main();
 }
 
-// void on_event_button_release_event(GtkEntry *e) {
-//     gtk_stack_set_visible_child(chats_contacts_stack, contacts_list);
-// }
-
-// void on_event2_button_release_event(GtkEntry *e) {
-//     gtk_stack_set_visible_child(chats_contacts_stack, chats_list);
-// }

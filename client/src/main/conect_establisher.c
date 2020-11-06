@@ -26,5 +26,5 @@ void connection_establisher(unsigned short port, char *ip_address) {
     } 
     else
         mx_printstr("Success: connection to the server established\n"); 
-    log_reg.sock_fd = sockfd;
+    main_data.sock_fd = sockfd;
 }

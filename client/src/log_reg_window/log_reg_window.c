@@ -20,7 +20,4 @@ void log_reg_window(void) {
     gtk_widget_grab_focus(log_reg.log_in_button);
     gtk_widget_show(log_reg.login_window);
     gtk_main();
-
-    free(log_reg.username);
-    free(log_reg.password);
 }

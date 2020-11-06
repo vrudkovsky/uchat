@@ -84,7 +84,7 @@
                 <property name="width_request">100</property>
                 <property name="height_request">87</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
                 <signal name="grab-focus" handler="focus_on_chats" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -100,7 +100,7 @@
                 <property name="width_request">100</property>
                 <property name="height_request">87</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
                 <signal name="grab-focus" handler="focus_on_contacts" swapped="no"/>
                 <child>
                   <object class="GtkImage">

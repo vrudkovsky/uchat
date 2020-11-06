@@ -15,19 +15,19 @@ static void registration_check_logic(void) {
 }
 
 void on_username_reg_field_changed(GtkEntry *e) {
-    sprintf(log_reg.username, "%s", gtk_entry_get_text(e));
+    sprintf(main_data.username, "%s", gtk_entry_get_text(e));
 }
 
 void on_email_reg_field_changed(GtkEntry *e) {
-    sprintf(log_reg.email, "%s", gtk_entry_get_text(e));
+    sprintf(main_data.email, "%s", gtk_entry_get_text(e));
 }
 
 void on_password_reg_field_changed(GtkEntry *e) {
-    sprintf(log_reg.password, "%s", gtk_entry_get_text(e));
+    sprintf(main_data.password, "%s", gtk_entry_get_text(e));
 }
 
 void on_password_reg_conf_field_changed(GtkEntry *e) {
-    sprintf(log_reg.password_conf, "%s", gtk_entry_get_text(e));
+    sprintf(main_data.password_conf, "%s", gtk_entry_get_text(e));
 }
 
 void on_username_reg_field_activate(GtkWindow *w) {

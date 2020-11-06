@@ -1,10 +1,10 @@
 #include "client.h"
 
 void log_reg_actions(void) {
-    log_reg.username = mx_strnew(20);
-    log_reg.email = mx_strnew(20);
-    log_reg.password_conf = mx_strnew(20);
-    log_reg.password = mx_strnew(20);
+    main_data.username = mx_strnew(20);
+    main_data.email = mx_strnew(20);
+    main_data.password_conf = mx_strnew(20);
+    main_data.password = mx_strnew(20);
 }
 
 void on_event_button_release_event(GtkEntry *e) {

@@ -11,11 +11,11 @@ void check_data_logic(void) {
 }
 
 void on_username_field_changed(GtkEntry *e) {
-    sprintf(log_reg.username, "%s", gtk_entry_get_text(e));
+    sprintf(main_data.username, "%s", gtk_entry_get_text(e));
 }
 
 void on_password_field_changed(GtkEntry *e) {
-    sprintf(log_reg.password, "%s", gtk_entry_get_text(e));
+    sprintf(main_data.password, "%s", gtk_entry_get_text(e));
 }
 
 void on_username_field_activate(GtkWindow *w) {
