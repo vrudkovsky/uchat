@@ -74,6 +74,12 @@ struct chat_window {
     contact_row_t *contact_row_list;
 }       chat;
 
+struct tmp_struct {
+    char *find_username;
+    char *find_email;
+    bool in_contacts;
+}      tmp_data;
+
 
 
 void start_error(int argc, char **argv);
@@ -90,5 +96,6 @@ void start_requests(void);
 void work_with_contacts(void);
 void add_new_contact_data_in_list(char *username, char *email);
 void add_new_contact_row_in_list(char *username);
+void find_new_contact(char *username);
 
 #endif

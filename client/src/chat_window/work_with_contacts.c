@@ -37,6 +37,54 @@ void add_new_contact_row_in_list(char *username) {
     }
 }
 
+static void find_user_send_request(char *username) {
+    cJSON *j_contacts = cJSON_CreateObject();
+    char *jdata = NULL;
+    cJSON_AddItemToObject(j_contacts, "action", cJSON_CreateString("find user"));
+    cJSON_AddItemToObject(j_contacts, "who", cJSON_CreateString(main_data.username));
+    cJSON_AddItemToObject(j_contacts, "whom", cJSON_CreateString(username));
+    jdata = cJSON_Print(j_contacts);
+    write(main_data.sock_fd, jdata, mx_strlen(jdata));
+	cJSON_Delete(j_contacts);
+    free(jdata);
+}
+
+static void find_user_get_responce() {
+    char *responce = mx_strnew(2000);
+    cJSON *j_test = cJSON_CreateObject();
+    cJSON *j_responce = cJSON_CreateObject();
+    // recv(main_data.sock_fd, responce, 2000, 0);
+    // j_responce = cJSON_Parse(responce);
+//////////////////////////////////////////////////
+    cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
+    cJSON_AddItemToObject(j_test, "in contact list", cJSON_CreateFalse());
+    cJSON_AddItemToObject(j_test, "email", cJSON_CreateString("vbrykov@gmail.com"));
+    responce = cJSON_Print(j_test);
+    printf("json ->\n%s\n", responce);
+    j_responce = cJSON_Parse(responce);
+//////////////////////////////////////////////////
+    //free(responce);
+    cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
+    if (cJSON_IsTrue(json_type)) {
+        json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "in contact list");
+        if (cJSON_IsTrue(json_type))
+            tmp_data.in_contacts = true;
+        json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "email");
+        tmp_data.find_username = mx_strdup(json_type->valuestring);
+    }
+    else 
+        main_data.contacts = 0;
+}
+
+void find_new_contact(char *username) {
+    tmp_data.in_contacts = false;
+    tmp_data.find_email = NULL;
+
+    find_user_send_request(username);
+    usleep(100);
+    find_user_get_responce();
+}
+
 static void create_start_contact_list_rows(void) {
     contact_t *contact_node = main_data.contact_list;
     while (contact_node != NULL) {
@@ -46,7 +94,17 @@ static void create_start_contact_list_rows(void) {
 }
 
 void work_with_contacts(void) {
+    tmp_data.find_username = mx_strnew(20);
     chat.contact_row_list = NULL;
     if (main_data.contacts > 0)
         create_start_contact_list_rows();
+}
+
+
+void on_find_user_field_changed(GtkEntry *e) {
+    sprintf(tmp_data.find_username, "%s", gtk_entry_get_text(e));
+}
+
+void on_find_user_field_activate(GtkEntry *e) {
+    find_new_contact(tmp_data.find_username);
 }

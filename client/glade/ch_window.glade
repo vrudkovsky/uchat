@@ -172,6 +172,8 @@
                     <property name="has_frame">False</property>
                     <property name="width_chars">18</property>
                     <property name="max_width_chars">18</property>
+                    <signal name="activate" handler="on_find_user_field_activate" swapped="no"/>
+                    <signal name="changed" handler="on_find_user_field_changed" swapped="no"/>
                   </object>
                   <packing>
                     <property name="x">22</property>
