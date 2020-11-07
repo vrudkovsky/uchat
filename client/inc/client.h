@@ -16,6 +16,12 @@
 #include <netdb.h>
 #include <errno.h>
 
+typedef struct contacts_list {
+    char *username;
+    char *email;
+    struct contacts_list *next;
+}              contact_t;
+
 struct main_info {
     int app_status;
     char *username;
@@ -26,12 +32,6 @@ struct main_info {
     int contacts;
     contact_t *contact_list;
 }       main_data;
-
-typedef struct contacts_list {
-    char *username;
-    char *email;
-    struct contacts_list *next;
-}              contact_t;
 
 struct start_window {
     GtkBuilder *builder;
@@ -51,6 +51,15 @@ struct start_window {
     GtkWidget *reg_log_button;
 }      log_reg;
 
+typedef struct contact_widget {
+    GtkWidget *row;
+    GtkWidget *fixed;
+    GtkWidget *username_label;
+    GtkWidget *initials_label;
+    GtkWidget *avatar_box;
+    struct contact_widget *next;
+}              contact_row_t;
+
 struct chat_window {
     GtkWidget *ch_window;
     GtkBuilder *builder;
@@ -65,14 +74,7 @@ struct chat_window {
     contact_row_t *contact_row_list;
 }       chat;
 
-typedef struct contact_widget {
-    GtkWidget *row;
-    GtkWidget *fixed;
-    GtkWidget *username_label;
-    GtkWidget *initials_label;
-    GtkWidget *avatar_box;
-    struct contact_row_t *next;
-}              contact_row_t;
+
 
 void start_error(int argc, char **argv);
 void connection_establisher(unsigned short port, char *ip_address);
@@ -86,6 +88,7 @@ void chat_window_main(void);
 void chat_window_init(void);
 void start_requests(void);
 void work_with_contacts(void);
-
+void add_new_contact_data_in_list(char *username, char *email);
+void add_new_contact_row_in_list(char *username);
 
 #endif

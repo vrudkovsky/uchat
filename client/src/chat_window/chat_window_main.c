@@ -17,4 +17,3 @@ void chat_window_main(void) {
     gtk_widget_show_all(chat.ch_window);
     gtk_main();
 }
-

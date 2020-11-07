@@ -10,7 +10,8 @@ void chat_window_init(void) {
     chat.chats_contacts_stack = GTK_STACK(gtk_builder_get_object(chat.builder, "chats_contacts_stack"));
     chat.chats_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "chats_list"));
     chat.contacts_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contacts_list"));
-
+    chat.contact_list_box = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_list_box"));
+    
     gtk_list_box_select_row ((GtkListBox*)chat.main_list, (GtkListBoxRow*)chat.contacts_row);
 }
 
