@@ -27,13 +27,13 @@ void add_new_contact_data_in_list(char *username, char *email) {
     }
 }
 
-void print_list(void) {
-    contact_t *node = main_data.contact_list;
-    while (node != NULL) {
-        printf("%s\t\t%s\n", node->username, node->email);
-        node = node->next;
-    }
-}
+// void print_list(void) {
+//     contact_t *node = main_data.contact_list;
+//     while (node != NULL) {
+//         printf("%s\t\t%s\n", node->username, node->email);
+//         node = node->next;
+//     }
+// }
 
 static void fill_contact_list(cJSON *j_responce) {
     cJSON *usernames_array = cJSON_GetObjectItemCaseSensitive(j_responce, "username");
@@ -46,7 +46,7 @@ static void fill_contact_list(cJSON *j_responce) {
         email = cJSON_GetArrayItem(emails_array, i);
         add_new_contact_data_in_list(username->valuestring, email->valuestring);
     }
-    print_list();
+    //print_list();
 }
 
 static void contact_list_get_responce(void) {
@@ -89,4 +89,9 @@ void start_requests(void) {
     contact_list_send_request();
     usleep(100);
     contact_list_get_responce();
+    usleep(100);
+    // chats_history_send_request();
+    // usleep(100);
+    // chats_history_get_responce();
+    // usleep(100);
 }

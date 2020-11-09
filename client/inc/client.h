@@ -66,15 +66,18 @@ struct chat_window {
     GtkWidget *main_list;
     GtkWidget *chats_row;
     GtkWidget *contacts_row;
+    GtkWidget *settings_row;
     GtkStack *chats_contacts_stack;
     GtkWidget *chats_list;
     GtkWidget *contacts_list;
     GtkWidget *contact_list_box;
+    GtkWidget *empty_list;
     GtkStyleContext *context_i_label;
     contact_row_t *contact_row_list;
 }       chat;
 
 struct tmp_struct {
+    bool found_user;
     char *find_username;
     char *find_email;
     bool in_contacts;

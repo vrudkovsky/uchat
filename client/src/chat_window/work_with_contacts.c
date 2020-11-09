@@ -66,23 +66,28 @@ static void find_user_get_responce() {
     //free(responce);
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
     if (cJSON_IsTrue(json_type)) {
+        tmp_data.found_user = true;
         json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "in contact list");
         if (cJSON_IsTrue(json_type))
             tmp_data.in_contacts = true;
         json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "email");
         tmp_data.find_username = mx_strdup(json_type->valuestring);
     }
-    else 
-        main_data.contacts = 0;
+}
+
+void show_search_result(void) {
+    
 }
 
 void find_new_contact(char *username) {
     tmp_data.in_contacts = false;
+    tmp_data.found_user = false;
     tmp_data.find_email = NULL;
 
     find_user_send_request(username);
     usleep(100);
     find_user_get_responce();
+    show_search_result();
 }
 
 static void create_start_contact_list_rows(void) {
@@ -101,7 +106,7 @@ void work_with_contacts(void) {
 }
 
 
-void on_find_user_field_changed(GtkEntry *e) {
+void on_find_user_field_change(GtkEntry *e) {
     sprintf(tmp_data.find_username, "%s", gtk_entry_get_text(e));
 }
 
