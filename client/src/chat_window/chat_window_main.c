@@ -14,6 +14,6 @@ void chat_window_main(void) {
     
     g_signal_connect(chat.ch_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     gtk_builder_connect_signals(chat.builder, NULL);
-    gtk_widget_show_all(chat.ch_window);
+    gtk_widget_show(chat.ch_window);
     gtk_main();
 }

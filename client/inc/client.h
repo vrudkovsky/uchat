@@ -70,17 +70,29 @@ struct chat_window {
     GtkStack *chats_contacts_stack;
     GtkWidget *chats_list;
     GtkWidget *contacts_list;
+    GtkWidget *contact_search_entry;
+    GtkWidget *search_result_label;
+    GtkWidget *search_result_list_box;
     GtkWidget *contact_list_box;
     GtkWidget *empty_list;
     GtkStyleContext *context_i_label;
     contact_row_t *contact_row_list;
 }       chat;
 
+
 struct tmp_struct {
-    bool found_user;
-    char *find_username;
-    char *find_email;
+    bool user_is_found;
     bool in_contacts;
+    bool showing_result;
+    char *searching_user;
+    char *find_user;
+    char *find_email;
+    GtkWidget *row_search;
+    GtkWidget *fixed_search;
+    GtkWidget *username_label_search;
+    GtkWidget *initials_label_search;
+    GtkWidget *avatar_box_search;
+    GtkStyleContext *context_label;
 }      tmp_data;
 
 
