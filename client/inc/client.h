@@ -85,7 +85,6 @@ struct chat_window {
     GtkWidget *contact_list_box;
 
     GtkWidget *empty_list;
-    GtkStyleContext *context_i_label;
     contact_row_t *contact_row_list;
 }       chat;
 
@@ -94,16 +93,10 @@ struct contact_search_row_struct {
     bool user_is_found;
     bool in_contacts;
     bool showing_result;
-    char *searching_user;
-    char *find_user;
-    char *find_email;
-    GtkWidget *row_search;
-    GtkWidget *fixed_search;
-    GtkWidget *username_label_search;
-    GtkWidget *initials_label_search;
-    GtkWidget *avatar_box_search;
-    GtkStyleContext *context_label;
-}      tmp_data;
+    char *username;
+    char *email;
+    contact_row_t *contact_row_list;
+}      search_user_data;
 
 
 

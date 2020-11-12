@@ -1,18 +1,7 @@
-
-/********************* Colour reference chart****************
-*************************** comment ********* colour ******** 
-
-box background colour       bbg              #131313
-box background light col    bbg              #211927
-box filldes colour          bfc              #3e3e3e
-box border colour           bb               #ffffff
-box text colour             bt               #ffffff
-
-*/
-
 window {
     background-color: #343434;
 }
+
 list {
 	color: white;
 	background-color: #343434;
