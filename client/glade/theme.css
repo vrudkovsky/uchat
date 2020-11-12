@@ -63,12 +63,14 @@ row {
 
 .list_ch_cont  row:selected {
 		background-color: #202433;
-		box-shadow: inset -2px 2px 3px -1px rgba(0, 0, 0, 0.5); }
+		box-shadow: inset 0 2px 3px 0px rgba(0, 0, 0, 0.5); }
 
 entry {
+	box-shadow: inset 0 2px 3px 0px rgba(0, 0, 0, 0.9);;
 	font-family: "Helvetica Neue";
-	background-color: transparent;
 	font-size: 17px;
+	color:  #d7d7d7;
+	background-color: #202433;
 	border-color: transparent; }
 
 entry:checked {
@@ -91,7 +93,15 @@ row:hover.contact_row {
 }
 
 .avatar_box {
-	background-color: rgba(255, 255, 255, 0.856);
+	background-color:#ffffff;
 	box-shadow: inset 0px 0px 6px 1px rgba(146, 146, 146, 0.815);
 	border-radius: 25px;
+}
+
+viewport {
+	background-color: #535150;
+}
+
+.chats_contacts_stack {
+	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.253);
 }

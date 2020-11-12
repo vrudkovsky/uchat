@@ -12,12 +12,23 @@ void chat_window_init(void) {
     chat.chats_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "chats_list"));
     chat.contacts_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contacts_list"));
     chat.contact_search_entry = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_search_entry"));
-    chat.search_result_label = GTK_WIDGET(gtk_builder_get_object(chat.builder, "search_result_label"));
-    chat.search_result_list_box = GTK_WIDGET(gtk_builder_get_object(chat.builder, "search_result_list_box"));
+    chat.contact_search_result_stack = GTK_STACK(gtk_builder_get_object(chat.builder, "contact_search_result_stack"));
+    chat.contact_search_result_fixed = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_search_result_fixed"));
+    chat.contact_search_result_empty_fixed = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_search_result_empty_fixed"));
+    chat.contact_search_result_label = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_search_result_label"));
+    chat.sorry_find_user_label = GTK_WIDGET(gtk_builder_get_object(chat.builder, "sorry_find_user_label"));
+    chat.contact_search_result_list_box = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_search_result_list_box"));
+    chat.contact_search_end_button = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_search_end_button"));
+    chat.contacts_scrolled_window = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contacts_scrolled_window"));
     chat.contact_list_box = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_list_box"));
     chat.empty_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "empty_list"));
     
     gtk_list_box_select_row((GtkListBox*)chat.main_list, (GtkListBoxRow*) chat.contacts_row);
+    gtk_stack_set_visible_child(chat.contact_search_result_stack, chat.contact_search_result_empty_fixed);
+    gtk_widget_grab_focus(chat.contact_search_end_button);
+
+    GtkStyleContext *context = gtk_widget_get_style_context((GtkWidget*)chat.chats_contacts_stack);
+    gtk_style_context_add_class(context, "chats_contacts_stack");
 }
 
 void focus_on_chats() {

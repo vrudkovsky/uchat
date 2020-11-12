@@ -13,6 +13,7 @@ static void init_contact_row_widgets(contact_row_t *node, char *username) {
     gtk_fixed_put((GtkFixed*)node->fixed, node->initials_label, 25, 17);
     gtk_fixed_put((GtkFixed*)node->fixed, node->username_label, 80, 20);
     gtk_list_box_insert((GtkListBox*)(chat.contact_list_box), node->row, -1);
+    gtk_widget_set_can_focus(node->row, FALSE);
 
     chat.context_i_label = gtk_widget_get_style_context(node->row);
     gtk_style_context_add_class(chat.context_i_label, "contact_row");
@@ -23,11 +24,7 @@ static void init_contact_row_widgets(contact_row_t *node, char *username) {
     chat.context_i_label = gtk_widget_get_style_context(node->avatar_box);
     gtk_style_context_add_class(chat.context_i_label, "avatar_box");
 
-    gtk_widget_show(node->row);
-    gtk_widget_show(node->fixed);
-    gtk_widget_show(node->avatar_box);
-    gtk_widget_show(node->initials_label);
-    gtk_widget_show(node->username_label);
+    gtk_widget_show_all(node->row);
 }
 
 static void init_contact_search_row_widget(char *username) {
@@ -42,7 +39,8 @@ static void init_contact_search_row_widget(char *username) {
     gtk_fixed_put((GtkFixed*)tmp_data.fixed_search, tmp_data.avatar_box_search, 14, 8);
     gtk_fixed_put((GtkFixed*)tmp_data.fixed_search, tmp_data.initials_label_search, 25, 17);
     gtk_fixed_put((GtkFixed*)tmp_data.fixed_search, tmp_data.username_label_search, 80, 20);
-    gtk_list_box_insert((GtkListBox*)(chat.search_result_list_box), tmp_data.row_search, -1);
+    gtk_list_box_insert((GtkListBox*)(chat.contact_search_result_list_box), tmp_data.row_search, -1);
+    gtk_widget_set_can_focus(tmp_data.row_search, FALSE);
 
     tmp_data.context_label = gtk_widget_get_style_context(tmp_data.row_search);
     gtk_style_context_add_class(tmp_data.context_label, "contact_row");
@@ -53,15 +51,8 @@ static void init_contact_search_row_widget(char *username) {
     tmp_data.context_label = gtk_widget_get_style_context(tmp_data.avatar_box_search);
     gtk_style_context_add_class(tmp_data.context_label, "avatar_box");
 
-    gtk_widget_set_margin_bottom(tmp_data.row_search, 30);
-    gtk_widget_set_margin_bottom(chat.search_result_label, 10);
-
-    gtk_widget_show(chat.search_result_label);
-    gtk_widget_show(tmp_data.row_search);
-    gtk_widget_show(tmp_data.fixed_search);
-    gtk_widget_show(tmp_data.avatar_box_search);
-    gtk_widget_show(tmp_data.initials_label_search);
-    gtk_widget_show(tmp_data.username_label_search);
+    gtk_widget_show(chat.contact_search_result_label);
+    gtk_widget_show_all(tmp_data.row_search);
     
     tmp_data.showing_result = true;    
 }
@@ -75,8 +66,10 @@ void add_new_contact_row_in_list(char *username) {
     } 
     else {
         contact_row_t *new_node = malloc(sizeof(contact_row_t));
+        contact_row_t *buff_node = chat.contact_row_list;
         init_contact_row_widgets(new_node, username);
         chat.contact_row_list = new_node;
+        chat.contact_row_list->next = buff_node;
     }
 }
 
@@ -119,8 +112,17 @@ static void find_user_get_responce() {
     }
 }
 
+static void activate_deactivate_all_rows_in_contact_list(bool switcher) {
+    contact_row_t *contact_node_row = chat.contact_row_list;
+    while (contact_node_row != NULL) {
+        gtk_list_box_row_set_activatable((GtkListBoxRow*)contact_node_row->row, switcher);
+        gtk_list_box_row_set_selectable((GtkListBoxRow*)contact_node_row->row, switcher);
+        contact_node_row = contact_node_row->next;
+    }
+}
+
 static void clean_search_result(void) {
-    gtk_widget_hide(chat.search_result_label);
+    gtk_stack_set_visible_child(chat.contact_search_result_stack, chat.contact_search_result_empty_fixed);
     gtk_widget_destroy(tmp_data.initials_label_search);
     gtk_widget_destroy(tmp_data.avatar_box_search);
     gtk_widget_destroy(tmp_data.username_label_search);
@@ -129,8 +131,11 @@ static void clean_search_result(void) {
 }
 
 void make_contact_list_inactive(void) {
-    gtk_widget_hide(chat.contact_list_box);
-    gtk_entry_set_text((GtkEntry*)chat.contact_search_entry, "");
+    gtk_list_box_unselect_all((GtkListBox*)chat.contact_list_box);
+    activate_deactivate_all_rows_in_contact_list(false);
+    //gtk_widget_set_opacity(chat.contact_list_box, 0.2);
+    gtk_widget_set_margin_top(chat.contacts_scrolled_window, 160);
+    gtk_widget_set_size_request(chat.contacts_scrolled_window, 230, 345);
 }
 
 void show_search_result(void) {
@@ -139,6 +144,8 @@ void show_search_result(void) {
         if (tmp_data.showing_result == true)
             clean_search_result();
         init_contact_search_row_widget(tmp_data.find_user);
+        gtk_stack_set_visible_child(chat.contact_search_result_stack, chat.contact_search_result_fixed);
+        gtk_list_box_select_row((GtkListBox*)chat.contact_list_box, (GtkListBoxRow*)tmp_data.row_search);
     }
     else {
 
@@ -175,4 +182,12 @@ void work_with_contacts(void) {
 void on_find_user_field_activate(GtkEntry *e) {
     tmp_data.searching_user = (char*)gtk_entry_get_text(e);
     find_new_contact(tmp_data.searching_user);
+}
+
+void on_contact_search_end_button_clicked(GtkButton *b) {
+    gtk_entry_set_text((GtkEntry*)chat.contact_search_entry, "");
+    gtk_stack_set_visible_child(chat.contact_search_result_stack, chat.contact_search_result_empty_fixed);
+    gtk_widget_set_margin_top(chat.contacts_scrolled_window, 0);
+    gtk_widget_set_size_request(chat.contacts_scrolled_window, 230, 505);
+    activate_deactivate_all_rows_in_contact_list(true);
 }

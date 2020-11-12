@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -70,17 +71,26 @@ struct chat_window {
     GtkStack *chats_contacts_stack;
     GtkWidget *chats_list;
     GtkWidget *contacts_list;
+
     GtkWidget *contact_search_entry;
-    GtkWidget *search_result_label;
-    GtkWidget *search_result_list_box;
+    GtkStack *contact_search_result_stack;
+    GtkWidget *contact_search_result_fixed;
+    GtkWidget *contact_search_result_empty_fixed;
+    GtkWidget *contact_search_result_label;
+    GtkWidget *sorry_find_user_label;
+    GtkWidget *contact_search_end_button;
+    GtkWidget *contact_search_result_list_box;
+
+    GtkWidget *contacts_scrolled_window;
     GtkWidget *contact_list_box;
+
     GtkWidget *empty_list;
     GtkStyleContext *context_i_label;
     contact_row_t *contact_row_list;
 }       chat;
 
 
-struct tmp_struct {
+struct contact_search_row_struct {
     bool user_is_found;
     bool in_contacts;
     bool showing_result;
