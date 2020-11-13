@@ -29,6 +29,11 @@ void chat_window_init(void) {
 
     GtkStyleContext *context = gtk_widget_get_style_context((GtkWidget*)chat.chats_contacts_stack);
     gtk_style_context_add_class(context, "chats_contacts_stack");
+    context = gtk_widget_get_style_context((GtkWidget*)chat.main_list);
+    gtk_style_context_add_class(context, "main_list");
+    context = gtk_widget_get_style_context((GtkWidget*) chat.contact_search_end_button);
+    gtk_style_context_add_class(context, "contact_search_end_button");
+
 }
 
 void focus_on_chats() {

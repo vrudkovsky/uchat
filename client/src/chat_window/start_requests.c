@@ -11,10 +11,23 @@ static void contact_list_send_request(void) {
     free(jdata);
 }
 
+char *make_initials_by_username(char *username) {
+    char *initials = mx_strnew(2);
+    for (int i = 0; i < 2; i++) {
+        if (username[i] > 96 && username[i] < 123) {
+            initials[i] = username[i] - 32;
+        }
+        else
+            initials[i] = username[i];
+    }
+    return initials;
+} 
+
 void add_new_contact_data_in_list(char *username, char *email) {
     if (main_data.contact_list == NULL) {
         main_data.contact_list = malloc(sizeof(contact_t));
         main_data.contact_list->username = mx_strdup(username);
+        main_data.contact_list->initials = make_initials_by_username(username);
         main_data.contact_list->email = mx_strdup(email);
         main_data.contact_list->next = NULL;
     } 
@@ -22,6 +35,7 @@ void add_new_contact_data_in_list(char *username, char *email) {
         contact_t *new_node = malloc(sizeof(contact_t));
         new_node->next = main_data.contact_list;
         new_node->username = mx_strdup(username);
+        new_node->initials = make_initials_by_username(username);
         new_node->email = mx_strdup(email);
         main_data.contact_list = new_node;
     }
@@ -30,7 +44,7 @@ void add_new_contact_data_in_list(char *username, char *email) {
 // void print_list(void) {
 //     contact_t *node = main_data.contact_list;
 //     while (node != NULL) {
-//         printf("%s\t\t%s\n", node->username, node->email);
+//         printf("%s\t%s\t%s\n", node->username, node->initials, node->email);
 //         node = node->next;
 //     }
 // }

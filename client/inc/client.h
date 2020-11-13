@@ -19,6 +19,7 @@
 
 typedef struct contacts_list {
     char *username;
+    char *initials;
     char *email;
     struct contacts_list *next;
 }              contact_t;
@@ -94,6 +95,7 @@ struct contact_search_row_struct {
     bool in_contacts;
     bool showing_result;
     char *username;
+    char *initials;
     char *email;
     contact_row_t *contact_row_list;
 }      search_user_data;
@@ -113,7 +115,8 @@ void chat_window_init(void);
 void start_requests(void);
 void work_with_contacts(void);
 void add_new_contact_data_in_list(char *username, char *email);
-void add_new_contact_row_in_list(char *username);
+void add_new_contact_row_in_list(char *username, char *initials);
 void find_new_contact(char *username);
+char *make_initials_by_username(char *username);
 
 #endif

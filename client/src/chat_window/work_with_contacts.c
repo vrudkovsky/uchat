@@ -1,12 +1,12 @@
 #include "client.h"
 
-static void init_contact_row_widgets(contact_row_t *node, char *username, GtkWidget *listbox) {
+static void init_contact_row_widgets(contact_row_t *node, char *username, char *initials, GtkWidget *listbox) {
     GtkStyleContext *context = NULL; 
 
     node->row = gtk_list_box_row_new();
     node->fixed = gtk_fixed_new();
     node->avatar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    node->initials_label = gtk_label_new("TD");
+    node->initials_label = gtk_label_new(initials);
     node->username_label = gtk_label_new(username);
     gtk_widget_set_size_request(node->avatar_box, 50, 50);
     gtk_widget_set_size_request(node->row, 230, 70);
@@ -29,16 +29,16 @@ static void init_contact_row_widgets(contact_row_t *node, char *username, GtkWid
     gtk_widget_show_all(node->row);
 }
 
-void add_new_contact_row_in_list(char *username) {
+void add_new_contact_row_in_list(char *username, char *initials) {
     if (chat.contact_row_list == NULL) {
         chat.contact_row_list = malloc(sizeof(contact_row_t));
-        init_contact_row_widgets(chat.contact_row_list, username, chat.contact_list_box);
+        init_contact_row_widgets(chat.contact_row_list, username, initials, chat.contact_list_box);
         chat.contact_row_list->next = NULL;
     } 
     else {
         contact_row_t *new_node = malloc(sizeof(contact_row_t));
         contact_row_t *buff_node = chat.contact_row_list;
-        init_contact_row_widgets(new_node, username, chat.contact_list_box);
+        init_contact_row_widgets(new_node, username, initials, chat.contact_list_box);
         chat.contact_row_list = new_node;
         chat.contact_row_list->next = buff_node;
     }
@@ -74,7 +74,8 @@ void show_search_result(void) {
     if (search_user_data.showing_result == true)
         delete_row(search_user_data.contact_row_list);
     if (search_user_data.user_is_found) {
-        init_contact_row_widgets(search_user_data.contact_row_list ,search_user_data.username, chat.contact_search_result_list_box);
+        search_user_data.initials = make_initials_by_username(search_user_data.username);
+        init_contact_row_widgets(search_user_data.contact_row_list, search_user_data.username, search_user_data.initials, chat.contact_search_result_list_box);
         search_user_data.showing_result = true;
         gtk_list_box_select_row((GtkListBox*)chat.contact_search_result_list_box, (GtkListBoxRow*)search_user_data.contact_row_list->row);
     }
@@ -143,7 +144,7 @@ static void create_start_contact_list_rows(void) {
     contact_t *contact_node = main_data.contact_list;
 
     while (contact_node != NULL) {
-        add_new_contact_row_in_list(contact_node->username);
+        add_new_contact_row_in_list(contact_node->username, contact_node->initials);
         contact_node = contact_node->next;
     }
 }
