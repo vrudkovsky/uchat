@@ -72,6 +72,7 @@ struct chat_window {
     GtkStack *chats_contacts_stack;
     GtkWidget *chats_list;
     GtkWidget *contacts_list;
+    GtkWidget *empty_list;
 
     GtkWidget *contact_search_entry;
     GtkStack *contact_search_result_stack;
@@ -85,7 +86,9 @@ struct chat_window {
     GtkWidget *contacts_scrolled_window;
     GtkWidget *contact_list_box;
 
-    GtkWidget *empty_list;
+    GtkStack *main_info_stack;
+    GtkWidget *contact_info_empty;
+
     contact_row_t *contact_row_list;
 }       chat;
 
@@ -94,13 +97,22 @@ struct contact_search_row_struct {
     bool user_is_found;
     bool in_contacts;
     bool showing_result;
-    char *username;
-    char *initials;
-    char *email;
+    contact_t *info;
     contact_row_t *contact_row_list;
 }      search_user_data;
 
-
+struct show_contact_info {
+    bool in_contacts;
+    bool search_view_is_active;
+    GtkWidget *stack_page;
+    GtkWidget *initials_label;
+    GtkWidget *username_label;
+    GtkWidget *email_label;
+    GtkWidget *write_message_button;
+    GtkWidget *add_contact_button;
+    GtkWidget *delete_contact_button;
+    contact_t *user_data;
+}      contact_info_view;
 
 void start_error(int argc, char **argv);
 void connection_establisher(unsigned short port, char *ip_address);
@@ -115,8 +127,13 @@ void chat_window_init(void);
 void start_requests(void);
 void work_with_contacts(void);
 void add_new_contact_data_in_list(char *username, char *email);
-void add_new_contact_row_in_list(char *username, char *initials);
+void add_new_contact_row_in_list(char *username, char *initials, int position);
 void find_new_contact(char *username);
 char *make_initials_by_username(char *username);
+void contact_stack_info_init(void);
+void print_contact_list(void);
+void activate_deactivate_all_rows_in_contact_list(bool switcher);
+int search_user_in_local_contact_list(char *username);
+void init_contact_row_widgets(contact_row_t *node, char *username, char *initials, GtkWidget *listbox, int position);
 
 #endif

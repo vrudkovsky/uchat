@@ -22,11 +22,16 @@ void chat_window_init(void) {
     chat.contacts_scrolled_window = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contacts_scrolled_window"));
     chat.contact_list_box = GTK_WIDGET(gtk_builder_get_object(chat.builder, "contact_list_box"));
     chat.empty_list = GTK_WIDGET(gtk_builder_get_object(chat.builder, "empty_list"));
-    
+
+    chat.main_info_stack = GTK_STACK(gtk_builder_get_object(chat.builder, "main_info_stack"));
+
+    contact_stack_info_init();
+
+    gtk_stack_set_visible_child(chat.main_info_stack, chat.contact_info_empty);
     gtk_list_box_select_row((GtkListBox*)chat.main_list, (GtkListBoxRow*) chat.contacts_row);
     gtk_stack_set_visible_child(chat.contact_search_result_stack, chat.contact_search_result_empty_fixed);
     gtk_widget_grab_focus(chat.contact_search_end_button);
-
+    
     GtkStyleContext *context = gtk_widget_get_style_context((GtkWidget*)chat.chats_contacts_stack);
     gtk_style_context_add_class(context, "chats_contacts_stack");
     context = gtk_widget_get_style_context((GtkWidget*)chat.main_list);

@@ -1,5 +1,13 @@
 #include "client.h"
 
+void print_contact_list(void) {
+    contact_t *node = main_data.contact_list;
+    while (node != NULL) {
+        printf("%s\t%s\t%s\n", node->username, node->initials, node->email);
+        node = node->next;
+    }
+}
+
 static void contact_list_send_request(void) {
     cJSON *j_contacts = cJSON_CreateObject();
     char *jdata = NULL;
@@ -41,14 +49,6 @@ void add_new_contact_data_in_list(char *username, char *email) {
     }
 }
 
-// void print_list(void) {
-//     contact_t *node = main_data.contact_list;
-//     while (node != NULL) {
-//         printf("%s\t%s\t%s\n", node->username, node->initials, node->email);
-//         node = node->next;
-//     }
-// }
-
 static void fill_contact_list(cJSON *j_responce) {
     cJSON *usernames_array = cJSON_GetObjectItemCaseSensitive(j_responce, "username");
     cJSON *emails_array = cJSON_GetObjectItemCaseSensitive(j_responce, "email");
@@ -60,7 +60,7 @@ static void fill_contact_list(cJSON *j_responce) {
         email = cJSON_GetArrayItem(emails_array, i);
         add_new_contact_data_in_list(username->valuestring, email->valuestring);
     }
-    //print_list();
+    print_contact_list();
 }
 
 static void contact_list_get_responce(void) {
