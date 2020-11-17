@@ -59,16 +59,13 @@ static void endDB(){
     sqlite3_close(db);
 }
 
-
 static void showDB() {
     int rc = 0;
     char zSql[]="SELECT * FROM users";
     printf("*** \tShow DB\t ***\n");
-    do
-        {
+    do {
             sqlite3_prepare(db, zSql, -1, &stmt, 0);
-            while(SQLITE_ROW == sqlite3_step(stmt))
-            {
+            while(SQLITE_ROW == sqlite3_step(stmt)) {
                 printf("%d\t%s\t%s\t%s\t%s\t%d\t%s\t%s\n",
                         sqlite3_column_int(stmt,0),
                         sqlite3_column_text(stmt,1),

@@ -5,12 +5,12 @@ static void add_new_contact_get_responce() {
     cJSON *j_test = cJSON_CreateObject();
     cJSON *add_contact_responce = cJSON_CreateObject();
 
-    // recv(main_data.sock_fd, responce, 2000, 0);
-    // j_responce = cJSON_Parse(responce);
+    recv(main_data.sock_fd, responce, 2000, 0);
+
 //////////////////////////////////////////////////
-    cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
-    responce = cJSON_Print(j_test);
-    printf("server responce->\n%s\n", responce);
+    // cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
+    // responce = cJSON_Print(j_test);
+    // printf("server responce->\n%s\n", responce);
 //////////////////////////////////////////////////
     add_contact_responce = cJSON_Parse(responce);
     free(responce);

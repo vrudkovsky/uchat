@@ -43,12 +43,13 @@ void init_contact_row_widgets(contact_row_t *node, char *username, char *initial
     node->fixed = gtk_fixed_new();
     node->avatar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     node->initials_label = gtk_label_new(initials);
+    gtk_label_set_width_chars((GtkLabel*)node->initials_label, 3);
     node->username_label = gtk_label_new(username);
     gtk_widget_set_size_request(node->avatar_box, 50, 50);
     gtk_widget_set_size_request(node->row, 230, 70);
     gtk_container_add((GtkContainer*)(node->row), node->fixed);
     gtk_fixed_put((GtkFixed*)node->fixed, node->avatar_box, 14, 8);
-    gtk_fixed_put((GtkFixed*)node->fixed, node->initials_label, 25, 17);
+    gtk_fixed_put((GtkFixed*)node->fixed, node->initials_label, 16, 17);
     gtk_fixed_put((GtkFixed*)node->fixed, node->username_label, 80, 20);
     gtk_list_box_insert((GtkListBox*)(listbox), node->row, position);
     gtk_widget_set_can_focus(node->row, FALSE);
@@ -130,20 +131,20 @@ static void find_user_get_responce() {
     cJSON *j_test = cJSON_CreateObject();
     cJSON *j_responce = cJSON_CreateObject();
 
-    // recv(main_data.sock_fd, responce, 2000, 0);
-    // j_responce = cJSON_Parse(responce);
-//////////////////////////////////////////////////
-    if (mx_strcmp(search_user_data.info->username, "Janbek") == 0) {
-        cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
-    }
-    else
-        cJSON_AddItemToObject(j_test, "status", cJSON_CreateFalse());
-    cJSON_AddItemToObject(j_test, "in contact list", cJSON_CreateFalse());
-    cJSON_AddItemToObject(j_test, "email", cJSON_CreateString("janbek@gmail.com"));
-    responce = cJSON_Print(j_test);
-    printf("server responce->\n%s\n", responce);
-//////////////////////////////////////////////////
+    recv(main_data.sock_fd, responce, 2000, 0);
     j_responce = cJSON_Parse(responce);
+//////////////////////////////////////////////////
+//     if (mx_strcmp(search_user_data.info->username, "Janbek") == 0) {
+//         cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
+//     }
+//     else
+//         cJSON_AddItemToObject(j_test, "status", cJSON_CreateFalse());
+//     cJSON_AddItemToObject(j_test, "in contact list", cJSON_CreateFalse());
+//     cJSON_AddItemToObject(j_test, "email", cJSON_CreateString("janbek@gmail.com"));
+//     responce = cJSON_Print(j_test);
+    printf("server responce->\n%s\n", responce);
+// //////////////////////////////////////////////////
+//     j_responce = cJSON_Parse(responce);
     free(responce);
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
     if (cJSON_IsTrue(json_type)) {
@@ -164,6 +165,7 @@ static void find_user_send_request(char *username) {
     cJSON_AddItemToObject(j_contacts, "who", cJSON_CreateString(main_data.username));
     cJSON_AddItemToObject(j_contacts, "whom", cJSON_CreateString(username));
     jdata = cJSON_Print(j_contacts);
+    printf("client request->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 	cJSON_Delete(j_contacts);
     free(jdata);

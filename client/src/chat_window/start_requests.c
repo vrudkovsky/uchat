@@ -1,5 +1,35 @@
 #include "client.h"
 
+//DIALOGS LIST INIT FUNCTIONS
+
+static void chats_history_send_request(void) {
+    cJSON *j_contacts = cJSON_CreateObject();
+    char *jdata = NULL;
+    cJSON_AddItemToObject(j_contacts, "action", cJSON_CreateString("get chats"));
+    cJSON_AddItemToObject(j_contacts, "who", cJSON_CreateString(main_data.username));
+    jdata = cJSON_Print(j_contacts);
+    printf("client request ->\n%s\n", jdata);
+    write(main_data.sock_fd, jdata, mx_strlen(jdata));
+	cJSON_Delete(j_contacts);
+    free(jdata);
+}
+
+static void chats_history_get_responce(void) {
+    char *responce = mx_strnew(5000);
+    cJSON *j_responce = cJSON_CreateObject();
+    recv(main_data.sock_fd, responce, 5000, 0);
+    printf("server responce->\n%s\n", responce);
+    j_responce = cJSON_Parse(responce);
+    free(responce);
+    cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
+    if (cJSON_IsTrue(json_type))
+        fill_chats_data(j_responce);
+}
+
+
+
+//CONTACT LIST INIT FUNCTIONS
+
 void print_contact_list(void) {
     contact_t *node = main_data.contact_list;
     while (node != NULL) {
@@ -14,6 +44,7 @@ static void contact_list_send_request(void) {
     cJSON_AddItemToObject(j_contacts, "action", cJSON_CreateString("get contacts"));
     cJSON_AddItemToObject(j_contacts, "who", cJSON_CreateString(main_data.username));
     jdata = cJSON_Print(j_contacts);
+    printf("client request ->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 	cJSON_Delete(j_contacts);
     free(jdata);
@@ -47,6 +78,8 @@ void add_new_contact_data_in_list(char *username, char *email) {
         new_node->email = mx_strdup(email);
         main_data.contact_list = new_node;
     }
+    main_data.contact_list->chats = NULL;
+    main_data.contact_list->chat_id = 0;
 }
 
 static void fill_contact_list(cJSON *j_responce) {
@@ -67,25 +100,24 @@ static void contact_list_get_responce(void) {
     char *responce = mx_strnew(2000);
     cJSON *j_test = cJSON_CreateObject();
     cJSON *j_responce = cJSON_CreateObject();
-    // recv(main_data.sock_fd, responce, 2000, 0);
-    // j_responce = cJSON_Parse(responce);
+    recv(main_data.sock_fd, responce, 2000, 0);
 //////////////////////////////////////////////////
-    cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
-    cJSON_AddItemToObject(j_test, "count", cJSON_CreateString("3"));
-    cJSON *username = cJSON_CreateArray();
-    cJSON_AddItemToArray(username, cJSON_CreateString("vbrykov"));
-    cJSON_AddItemToArray(username, cJSON_CreateString("imovchan"));
-    cJSON_AddItemToArray(username, cJSON_CreateString("vrudkovsky"));
-    cJSON_AddItemToObject(j_test, "username", username);
-    cJSON *email = cJSON_CreateArray();
-    cJSON_AddItemToArray(email, cJSON_CreateString("vbrykov@gmail.com"));
-    cJSON_AddItemToArray(email, cJSON_CreateString("imovchan@gmail.com"));
-    cJSON_AddItemToArray(email, cJSON_CreateString("vrudkovsky@gmail.com"));
-    cJSON_AddItemToObject(j_test, "email", email);
-    responce = cJSON_Print(j_test);
-    //printf("json ->\n%s\n", responce);
+    // cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
+    // cJSON_AddItemToObject(j_test, "count", cJSON_CreateString("3"));
+    // cJSON *username = cJSON_CreateArray();
+    // cJSON_AddItemToArray(username, cJSON_CreateString("vbrykov"));
+    // cJSON_AddItemToArray(username, cJSON_CreateString("imovchan"));
+    // cJSON_AddItemToArray(username, cJSON_CreateString("vrudkovsky"));
+    // cJSON_AddItemToObject(j_test, "username", username);
+    // cJSON *email = cJSON_CreateArray();
+    // cJSON_AddItemToArray(email, cJSON_CreateString("vbrykov@gmail.com"));
+    // cJSON_AddItemToArray(email, cJSON_CreateString("imovchan@gmail.com"));
+    // cJSON_AddItemToArray(email, cJSON_CreateString("vrudkovsky@gmail.com"));
+    // cJSON_AddItemToObject(j_test, "email", email);
+    // responce = cJSON_Print(j_test);
+    printf("server responce->\n%s\n", responce);
+//////////////////////////////////////////////////
     j_responce = cJSON_Parse(responce);
-//////////////////////////////////////////////////
     //free(responce);
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
     if (cJSON_IsTrue(json_type)) {
@@ -104,8 +136,8 @@ void start_requests(void) {
     usleep(100);
     contact_list_get_responce();
     usleep(100);
-    // chats_history_send_request();
-    // usleep(100);
-    // chats_history_get_responce();
-    // usleep(100);
+    chats_history_send_request();
+    usleep(100);
+    chats_history_get_responce();
+    usleep(100);
 }
