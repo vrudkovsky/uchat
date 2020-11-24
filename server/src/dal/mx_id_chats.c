@@ -33,7 +33,7 @@ static const char *find_username_id(char *username) { //затычка либы
 
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0 ) {
                     //printf("<--!!!!! Inside search function !!!!->");
-
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,0);
                 }
             }
@@ -80,7 +80,6 @@ char **mx_id_chats(char *who) {
 	
 
     arr = mx_id_chaty_user(num_id_who);
-
-    return arr;
     endDB();
+    return arr;
 }

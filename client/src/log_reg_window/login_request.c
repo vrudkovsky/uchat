@@ -25,6 +25,7 @@ int login_request(void) {
     recv(main_data.sock_fd, responce, 2000, 0);
     j_responce = cJSON_Parse(responce);
     free(responce);
+    
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
     if (cJSON_IsTrue(json_type))
         return 1;

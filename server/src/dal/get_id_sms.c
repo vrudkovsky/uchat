@@ -33,6 +33,7 @@ static const char *find_whom_id(char *whom) { //находит айди whom
                     //printf("%s\n", sqlite3_column_text(stmt,3));
                     const char *id = mx_strnew(255);
                     id = (const char*)sqlite3_column_text(stmt,0);
+                    rc = sqlite3_finalize(stmt);
                     return id;
                 }
             }
@@ -65,6 +66,7 @@ static const char *contact_id_message(const char *id_who, const char *id_whom, i
                     if(krugi == i) {
                         const char *res = mx_strnew(255);
                         res = (const char*)sqlite3_column_text(stmt,0);
+                        rc = sqlite3_finalize(stmt);
                         return res;
                     }
             }
@@ -100,7 +102,7 @@ char **id_sms_arr(char *who, char *whom, int count_sms) {
         arr[i+1] = NULL;
         i++;
     }
-
+endDB();
 return arr;
     
 
@@ -110,5 +112,5 @@ return arr;
     //showDB_users();
     //showDB_contacts();
     //showDB_user_contacts();
-    endDB();
+    
 }

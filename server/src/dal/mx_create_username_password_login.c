@@ -8,7 +8,7 @@ sqlite3_stmt* stmt; // строка запроса к БД
 static void startDB() {
     char str[1000];
     // int lenstr=0;
-    if( sqlite3_open("uchat.db", &db)) {
+    if (sqlite3_open("uchat.db", &db)) {
         printf(str, "Ошибка открытия БД: %s\n", sqlite3_errmsg(db));
     }
 }
@@ -47,12 +47,13 @@ static bool insertRecord(char *str_1, char *str_2, char *str_3) {
     srt_buf = strcat(srt_buf, string_13);
     srt_buf = strcat(srt_buf, string_14);
     srt_buf = strcat(srt_buf, string_15);
-	 printf("stroka %s\n", srt_buf);	
+	printf("stroka %s\n", srt_buf);	
 
-     printf("*** \tInsert into DB\t ***\n");
-     sqlite3_prepare(db, srt_buf, -1, &stmt, 0);
-     sqlite3_step(stmt);
-     return 0;
+    printf("*** \tInsert into DB\t ***\n");
+    sqlite3_prepare(db, srt_buf, -1, &stmt, 0);
+    sqlite3_step(stmt);
+    int rc = sqlite3_finalize(stmt);
+    return 0;
 }
 
 static void endDB(){
@@ -83,9 +84,9 @@ static void showDB() {
 
 bool mx_create_username_password_login(char *username, char *pass, char *email) { //затычка либы
 	startDB();
-	showDB();
+	//showDB();
 	insertRecord(username, pass, email);
-	showDB();
+	//showDB();
     endDB();
     return true;
 }

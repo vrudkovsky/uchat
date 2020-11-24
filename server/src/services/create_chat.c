@@ -9,15 +9,15 @@ cJSON *json_type2 = cJSON_GetObjectItemCaseSensitive(j_request, "whom");
 
     int num = mx_create_chat(json_type1->valuestring, json_type2->valuestring);  //посчитать колличество чатов //+
     //printf("%d\n", num);
-    if(num != 0) {
+    if (num != 0) {
         cJSON_AddItemToObject(j_responce, "status", cJSON_CreateTrue());
-        cJSON_AddItemToObject(j_responce, "id_chat", cJSON_CreateNumber(num));
+        cJSON_AddItemToObject(j_responce, "chat id", cJSON_CreateNumber(num));
     }
 
     // char *jdata = cJSON_Print(j_responce);
     // printf("%s\n", jdata);
 //    
-    if(num == 0)
+    if (num == 0)
         cJSON_AddItemToObject(j_responce, "status", cJSON_CreateFalse());
     return j_responce;
 }

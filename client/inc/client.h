@@ -20,7 +20,7 @@
 typedef struct chats {
     bool is_owner;
     int msg_id;
-    long time;
+    int time;
     char *msg;
     struct chats *next;
 }              chats_t;
@@ -146,6 +146,8 @@ void activate_deactivate_all_rows_in_contact_list(bool switcher);
 int search_user_in_local_contact_list(char *username);
 void init_contact_row_widgets(contact_row_t *node, char *username, char *initials, GtkWidget *listbox, int position);
 void fill_chats_data(cJSON *responce);
-void add_new_chat_in_list(cJSON *chat);
+void add_new_chats_in_chats_list(cJSON *chat);
+contact_t *search_contact_node(char *contact_name);
+void insert_new_message_in_chat(int chat_id, int msg_id, char *sender, int time, char *msg);
 
 #endif

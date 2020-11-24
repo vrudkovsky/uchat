@@ -12,7 +12,6 @@ cJSON *register_user(cJSON *j_request, cJSON *j_responce) {
         cJSON_AddItemToObject(j_responce, "usernameexist", cJSON_CreateTrue());
         flag = false;
     }
-
     json_type = cJSON_GetObjectItemCaseSensitive(j_request, "email");
     if(mx_find_email(json_type->valuestring) != 0) {
         if(flag)
@@ -20,7 +19,6 @@ cJSON *register_user(cJSON *j_request, cJSON *j_responce) {
         cJSON_AddItemToObject(j_responce, "emailexist", cJSON_CreateTrue());
         flag = false;
     }
-
     if (flag == true) {
         json_type = cJSON_GetObjectItemCaseSensitive(j_request, "email");
         username = mx_strcpy(username = mx_strnew(mx_strlen(json_type->valuestring)), json_type->valuestring);
@@ -34,6 +32,5 @@ cJSON *register_user(cJSON *j_request, cJSON *j_responce) {
         free(password);
         cJSON_AddItemToObject(j_responce, "status", cJSON_CreateTrue());
     }
-
     return j_responce;
 }

@@ -59,28 +59,26 @@ cJSON *json_type1 = cJSON_GetObjectItemCaseSensitive(j_request, "who");
                         n++;
                     }
 
-                 sender = cJSON_CreateArray();
-                 cJSON_AddItemToObject(info_chat, "sender", sender);
-                 char **get_who = mx_get_who(user_1, user_2, count_sms);
-                 n = 0;
-
-                  while(n != count_sms) {
-                        if(strcmp(get_who[0], "-1") == 0)
-                            get_who[0] = NULL;
-                        cJSON_AddItemToObject(sender, "sender", cJSON_CreateString(get_who[n]));
-                        n++;
-                    }
-
+                sender = cJSON_CreateArray();
+                char **get_who = mx_get_who(user_1, user_2, count_sms);
+                n = 0;
+                while (n != count_sms) {
+                    if (strcmp(get_who[0], "-1") == 0)
+                        get_who[0] = NULL;
+                    cJSON_AddItemToArray(sender, cJSON_CreateString(get_who[n]));
+                    n++;
+                }
+                cJSON_AddItemToObject(info_chat, "sender", sender);
 
                  sms = cJSON_CreateArray();
-                 cJSON_AddItemToObject(info_chat, "sms", sms);
+                 cJSON_AddItemToObject(info_chat, "msg", sms);
                  char **get_sms = mx_get_sms(user_1, user_2, count_sms);
                  n = 0;
 
                   while(n != count_sms) {
                         if(strcmp(get_sms[0], "-1") == 0)
                             get_sms[0] = NULL;
-                        cJSON_AddItemToObject(sms, "sms", cJSON_CreateString(get_sms[n]));
+                        cJSON_AddItemToObject(sms, "msg", cJSON_CreateString(get_sms[n]));
                         n++;
                     }
                 i++;

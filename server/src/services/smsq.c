@@ -6,17 +6,15 @@ cJSON *smsq(cJSON *j_request, cJSON *j_responce) {
   
 cJSON *json_type1 = cJSON_GetObjectItemCaseSensitive(j_request, "who"); //string
 cJSON *json_type2 = cJSON_GetObjectItemCaseSensitive(j_request, "whom");  //string
-cJSON *json_type3 = cJSON_GetObjectItemCaseSensitive(j_request, "text sms");  //string
-cJSON *json_type4 = cJSON_GetObjectItemCaseSensitive(j_request, "create_at");  //string
-cJSON *json_type5 = cJSON_GetObjectItemCaseSensitive(j_request, "id_chat");   //string
+cJSON *json_type3 = cJSON_GetObjectItemCaseSensitive(j_request, "msg");  //string
+cJSON *json_type4 = cJSON_GetObjectItemCaseSensitive(j_request, "time");  //integer
+cJSON *json_type5 = cJSON_GetObjectItemCaseSensitive(j_request, "chat id");   //integer
 
-
-    char *id_sms = create_sms(json_type1->valuestring, json_type2->valuestring, json_type3->valuestring, json_type4->valuestring);  //посчитать колличество чатов //+
+    char *id_sms = create_sms(json_type1->valuestring, json_type2->valuestring, json_type3->valuestring, json_type4->valueint);  //посчитать колличество чатов //+
     //printf("%d\n", num);
 
         cJSON_AddItemToObject(j_responce, "status", cJSON_CreateTrue());
-        cJSON_AddItemToObject(j_responce, "id_messahe", cJSON_CreateString(id_sms));
-
+        cJSON_AddItemToObject(j_responce, "msg id", cJSON_CreateNumber(mx_atoi(id_sms)));
 
     // char *jdata = cJSON_Print(j_responce);
     // printf("%s\n", jdata);

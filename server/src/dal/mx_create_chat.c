@@ -29,11 +29,13 @@ static const char *id_message(const char *id_who, const char *id_whom) { //на�
                 if ((strcmp((const char*)sqlite3_column_text(stmt,1), id_who) == 0 ) && (strcmp((const char*)sqlite3_column_text(stmt,2), id_whom) == 0 )) {
                         const char *res = mx_strnew(255);
                         res = (const char*)sqlite3_column_text(stmt,0);
+                        rc = sqlite3_finalize(stmt);
                         return res;
                 }
                 if ((strcmp((const char*)sqlite3_column_text(stmt,1), id_whom) == 0 ) && (strcmp((const char*)sqlite3_column_text(stmt,2), id_who) == 0 )) {
                         const char *res = mx_strnew(255);
                         res = (const char*)sqlite3_column_text(stmt,0);
+                        rc = sqlite3_finalize(stmt);
                         return res;
                 }
             }
@@ -67,6 +69,7 @@ static void showDB() {
             rc = sqlite3_finalize(stmt);
         }
     while(rc == SQLITE_SCHEMA);
+    rc = sqlite3_finalize(stmt);
 }
 
 static char *id(const char *username) { //находит айди whom
@@ -85,6 +88,7 @@ static char *id(const char *username) { //находит айди whom
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0) {
                         char *res = mx_strnew(255);
                         res = (char*)sqlite3_column_text(stmt,0);
+                        rc = sqlite3_finalize(stmt);
                         return res;
                 }
             }
@@ -142,6 +146,7 @@ static int last_id(void) { //находит айди whom
      printf("*** \tInsert into DB\t ***\n");
      sqlite3_prepare(db, srt_buf, -1, &stmt, 0);
      sqlite3_step(stmt);
+     int rc = sqlite3_finalize(stmt);
 }
 
 
@@ -164,7 +169,8 @@ int mx_create_chat(const char *username_1, const char *username_2) { //заты�
     insertRecord(id_chat_str, user_1_id, user_2_id);
     const char *res = id_message(user_1_id, user_2_id);
     int ress = mx_atoi(res);
-
+    if (ress <= 0) 
+        ress = 0;
     //printf("%d\n", id_chat);
     //insertRecord();
     //showDB();
@@ -172,4 +178,3 @@ int mx_create_chat(const char *username_1, const char *username_2) { //заты�
     return ress;
 
 }
-

@@ -19,7 +19,7 @@ static const char *find_username_id(char *username) { //затычка либы
 
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0 ) {
                     //printf("<--!!!!! Inside search function !!!!->");
-
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,0);
                 }
             }
@@ -76,6 +76,7 @@ static const char *username_1(char *username) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,0);
                 }
             }
@@ -96,6 +97,7 @@ static const char *username_2(char *id_chat) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,0), id_chat) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,2);
                 }
             }
@@ -108,7 +110,7 @@ static const char *username_2(char *id_chat) { //затычка либы
 static int count_sms(const char *username) { //затычка либы
 	int rc = 0;
     int count = 0;
-    char zSql[]="SELECT * FROM messages";
+    char zSql[] = "SELECT * FROM messages";
     //printf("*** \tShow DB\t ***\n");
     do
         {
@@ -116,7 +118,7 @@ static int count_sms(const char *username) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,2), username) == 0) {
-                    printf("******************\n");
+                    //printf("******************\n");
                     if (strcmp((const char*)sqlite3_column_text(stmt,6), "1") == 0) {
  					count++;
                     }

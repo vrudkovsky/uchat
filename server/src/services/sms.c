@@ -23,7 +23,7 @@ cJSON *json_type1 = cJSON_GetObjectItemCaseSensitive(j_request, "who");
     
              while(id_chats[i] != NULL) {
 
-    //             //printf("id_chats %s\n", id_chats[i]);
+    ////printf("id_chats %s\n", id_chats[i]);
                  cJSON_AddItemToArray(chaty, info_chat = cJSON_CreateObject());
                  cJSON_AddItemToObject(info_chat, "id chats", cJSON_CreateString(id_chats[i]));
 

@@ -13,7 +13,7 @@ static void startDB() {
     }
 }
 
-static bool insertRecord(char *who, char *whom, char *text, char *created_at, char *id_chat_str) {
+static bool insertRecord(char *who, char *whom, char *text, int created_at, char *id_chat_str) {
 
 
     char *string_1 = "INSERT INTO messages (id, sender_id , recipient_id, msg_text, created_at, updated_at, msg_status) VALUES (";
@@ -25,9 +25,9 @@ static bool insertRecord(char *who, char *whom, char *text, char *created_at, ch
     char *string_7 = "', '";
     char *string_8 = text;
     char *string_9 = "', '";
-    char *string_10 = created_at;
+    char *string_10 = mx_itoa(created_at);
     char *string_11 = "', '";
-    char *string_12 = "ololololo";
+    char *string_12 = mx_itoa(created_at);
     char *string_13 = "', ";
     char *string_14 = "1";
     char *string_15 = ")";
@@ -48,12 +48,13 @@ static bool insertRecord(char *who, char *whom, char *text, char *created_at, ch
     srt_buf = strcat(srt_buf, string_13);
     srt_buf = strcat(srt_buf, string_14);;
     srt_buf = strcat(srt_buf, string_15);
-     printf("stroka %s\n", srt_buf);    
+    printf("stroka %s\n", srt_buf);    
 
-     printf("*** \tInsert into DB\t ***\n");
-     sqlite3_prepare(db, srt_buf, -1, &stmt, 0);
-     sqlite3_step(stmt);
-     return 0;
+    printf("*** \tInsert into DB\t ***\n");
+    sqlite3_prepare(db, srt_buf, -1, &stmt, 0);
+    sqlite3_step(stmt);
+    int rc = sqlite3_finalize(stmt);
+    return 0;
 }
 
 static void endDB(){
@@ -96,8 +97,8 @@ static int last_id(void) { //находит айди whom
                 count++;
                 }
             }
-                rc = sqlite3_finalize(stmt);
-                }
+            rc = sqlite3_finalize(stmt);
+        }
     while(rc == SQLITE_SCHEMA); {}
     return count;
 
@@ -114,6 +115,7 @@ static char *search_user(char *username) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (char *)sqlite3_column_text(stmt,0);
                 }
 
@@ -124,19 +126,19 @@ static char *search_user(char *username) { //затычка либы
     return "-1";
 }
 
-char *create_sms(char *who, char *whom, char *text, char *created_at) { //затычка либы
+char *create_sms(char *who, char *whom, char *text, int created_at) { //затычка либы
     startDB();
-    showDB();
+    //showDB();
     int i = last_id();
-    printf("iiii %d\n", i);
+    //printf("iiii %d\n", i);
     i++;
     char *wwho = search_user(who);
     char *wwhom = search_user(whom);
     char *id_chat_str = mx_itoa(i);
-    printf("id_sms_str %s\n", id_chat_str);
+    //printf("id_sms_str %s\n", id_chat_str);
 
     insertRecord(wwho, wwhom, text, created_at, id_chat_str);
-    showDB();
+    //showDB();
     endDB();
     return id_chat_str;
 

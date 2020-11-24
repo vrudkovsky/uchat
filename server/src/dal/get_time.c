@@ -66,6 +66,7 @@ static int contact_id_message(const char *id_who, const char *id_whom, int i) { 
                     if(krugi == i) {
                         int res;
                         res = sqlite3_column_int(stmt,6);
+                        rc = sqlite3_finalize(stmt);
                         return res;
                     }
             }
@@ -86,7 +87,7 @@ int *mx_get_time(char *who, char *whom, int count_sms) {
 
     while (i < count_sms) {
         arr[i] = contact_id_message(friends_1, friends_2, i);
-        printf("%d\n", arr[i]);
+        //printf("%d\n", arr[i]);
         i++;
     }
     endDB();

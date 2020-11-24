@@ -58,7 +58,7 @@ static bool find_email(char *email) { //затычка либы
 
                 if ( strcmp((const char*)sqlite3_column_text(stmt,3), email) == 0 ) {
                     printf("<--!!!!! Inside search function !!!!->");
-
+                    rc = sqlite3_finalize(stmt);
                     return 1;
                 }
             }
@@ -70,10 +70,12 @@ static bool find_email(char *email) { //затычка либы
 
 bool mx_find_email(char *email) {
 	startDB();
-	showDB();
-	if(find_email(email) != 0)
+	//showDB();
+	if(find_email(email) != 0) {
+        endDB();
 		return 1;
-	showDB();
+    }
+	//showDB();
     endDB();
     return 0;
 }

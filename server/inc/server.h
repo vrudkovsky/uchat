@@ -50,7 +50,7 @@ bool mx_delete_contact(char *who, char *whom);
 char **mx_my_username(char *who);
 char **mx_my_mail(char *who);
 int count_friends(char *who);
-const char *in_search_mail(char *username); 
+char *in_search_mail(char *username); 
 
 //download_message_history
 cJSON *download_message_history(cJSON *j_request, cJSON *j_responce);
@@ -80,7 +80,7 @@ cJSON *create_chat(cJSON *j_request, cJSON *j_responce);
 int mx_create_new_db_chat(char *id, char *username1, char *username2);
 
 cJSON *sms(cJSON *j_request, cJSON *j_responce);
-char *create_sms(char *who, char *whom, char *text, char *created_at);
+char *create_sms(char *who, char *whom, char *text, int created_at);
 char **mx_id_chats(char *who);
 int count_sms_give(char *username);
 cJSON *sms(cJSON *j_request, cJSON *j_responce);

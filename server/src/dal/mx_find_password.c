@@ -46,6 +46,7 @@ static bool find_password(char *pass, char *login) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), login) == 0 ) {
                     if (strcmp((const char*)sqlite3_column_text(stmt,2), pass) == 0 ) {
                     printf("<--!!!!! Inside search function !!!!->");
+                    rc = sqlite3_finalize(stmt);
                     return 1;
                     }
                 }
@@ -61,12 +62,14 @@ static void endDB(){
 }
 
 bool mx_find_password(char *pass, char *login) {
-    printf("%s 11111111111111111111111111", pass);
+    //printf("%s 11111111111111111111111111", pass);
 	startDB();
-	showDB();
-	if(find_password(pass, login) != 0)
+	//showDB();
+	if(find_password(pass, login) != 0) {
+        endDB();
 		return 1;
-	showDB();
+    }
+	//showDB();
     endDB();
     return 0;
 }

@@ -15,14 +15,9 @@ cJSON *find_user(cJSON *j_request, cJSON *j_responce) {
         else
             cJSON_AddItemToObject(j_responce, "in contact list", cJSON_CreateTrue());
 
-        const char *mail = in_search_mail(json_type1->valuestring); 
-        cJSON_AddItemToObject(j_responce, "email", cJSON_CreateString(mail));
+        cJSON_AddItemToObject(j_responce, "email", cJSON_CreateString(in_search_mail(json_type1->valuestring)));
     }
     else
         cJSON_AddItemToObject(j_responce, "status", cJSON_CreateFalse());
     return j_responce;
 }
-
-//         Виктору функция 
-//          получил ник в виде строки, если в друзьях нет - false
-//           bool in_contact_list(char *username)    

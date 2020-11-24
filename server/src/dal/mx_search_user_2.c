@@ -19,7 +19,7 @@ static const char *find_username_id(char *username) { //затычка либы
 
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0 ) {
                     //printf("<--!!!!! Inside search function !!!!->");
-
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,0);
                 }
             }
@@ -76,6 +76,7 @@ static const char *username_1(char *id_chat) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,0), id_chat) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,1);
                 }
             }
@@ -96,6 +97,7 @@ static const char *username_2(char *id_chat) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,0), id_chat) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,2);
                 }
             }
@@ -141,6 +143,7 @@ static char *search_user_2(const char *username_1, const char *username_2) { //�
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,0), username_2) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (char *)sqlite3_column_text(stmt,1);
                 }
 
@@ -165,7 +168,7 @@ char *mx_search_user_2(char *id_chat) {
 
     
     //showDB();
-    //endDB();
+    endDB();
     return result;
 }
 

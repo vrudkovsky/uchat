@@ -1,6 +1,6 @@
 #include "client.h"
 
-//DIALOGS LIST INIT FUNCTIONS
+//CHATS LIST INIT FUNCTIONS
 
 static void chats_history_send_request(void) {
     cJSON *j_contacts = cJSON_CreateObject();
@@ -15,25 +15,39 @@ static void chats_history_send_request(void) {
 }
 
 static void chats_history_get_responce(void) {
-    char *responce = mx_strnew(5000);
+    char *responce = mx_strnew(2000);
     cJSON *j_responce = cJSON_CreateObject();
-    recv(main_data.sock_fd, responce, 5000, 0);
+    recv(main_data.sock_fd, responce, 2000, 0);
     printf("server responce->\n%s\n", responce);
     j_responce = cJSON_Parse(responce);
     free(responce);
+
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
+
     if (cJSON_IsTrue(json_type))
         fill_chats_data(j_responce);
+    //print_contact_list();
 }
-
 
 
 //CONTACT LIST INIT FUNCTIONS
 
+static void print_chat_content(chats_t *chat) {
+    chats_t *node = chat;
+    while (node != NULL) {
+        printf("is owner:\t%d\n", node->is_owner);
+        printf("msg id:\t\t%d\n", node->msg_id);
+        printf("time:\t\t%d\n", node->time);
+        printf("msg:\t\t%s\n", node->msg);
+        node = node->next;
+    }
+}
+
 void print_contact_list(void) {
     contact_t *node = main_data.contact_list;
     while (node != NULL) {
-        printf("%s\t%s\t%s\n", node->username, node->initials, node->email);
+        printf("\nusername:\t%s\n", node->username);
+        print_chat_content(node->chats);
         node = node->next;
     }
 }
@@ -68,6 +82,8 @@ void add_new_contact_data_in_list(char *username, char *email) {
         main_data.contact_list->username = mx_strdup(username);
         main_data.contact_list->initials = make_initials_by_username(username);
         main_data.contact_list->email = mx_strdup(email);
+        main_data.contact_list->chat_id = -1;
+        main_data.contact_list->chats = NULL;
         main_data.contact_list->next = NULL;
     } 
     else {
@@ -76,10 +92,10 @@ void add_new_contact_data_in_list(char *username, char *email) {
         new_node->username = mx_strdup(username);
         new_node->initials = make_initials_by_username(username);
         new_node->email = mx_strdup(email);
+        new_node->chat_id = -1;
+        new_node->chats = NULL;
         main_data.contact_list = new_node;
     }
-    main_data.contact_list->chats = NULL;
-    main_data.contact_list->chat_id = 0;
 }
 
 static void fill_contact_list(cJSON *j_responce) {
@@ -93,7 +109,7 @@ static void fill_contact_list(cJSON *j_responce) {
         email = cJSON_GetArrayItem(emails_array, i);
         add_new_contact_data_in_list(username->valuestring, email->valuestring);
     }
-    print_contact_list();
+    //print_contact_list();
 }
 
 static void contact_list_get_responce(void) {
@@ -101,28 +117,15 @@ static void contact_list_get_responce(void) {
     cJSON *j_test = cJSON_CreateObject();
     cJSON *j_responce = cJSON_CreateObject();
     recv(main_data.sock_fd, responce, 2000, 0);
-//////////////////////////////////////////////////
-    // cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
-    // cJSON_AddItemToObject(j_test, "count", cJSON_CreateString("3"));
-    // cJSON *username = cJSON_CreateArray();
-    // cJSON_AddItemToArray(username, cJSON_CreateString("vbrykov"));
-    // cJSON_AddItemToArray(username, cJSON_CreateString("imovchan"));
-    // cJSON_AddItemToArray(username, cJSON_CreateString("vrudkovsky"));
-    // cJSON_AddItemToObject(j_test, "username", username);
-    // cJSON *email = cJSON_CreateArray();
-    // cJSON_AddItemToArray(email, cJSON_CreateString("vbrykov@gmail.com"));
-    // cJSON_AddItemToArray(email, cJSON_CreateString("imovchan@gmail.com"));
-    // cJSON_AddItemToArray(email, cJSON_CreateString("vrudkovsky@gmail.com"));
-    // cJSON_AddItemToObject(j_test, "email", email);
-    // responce = cJSON_Print(j_test);
+
     printf("server responce->\n%s\n", responce);
-//////////////////////////////////////////////////
+
     j_responce = cJSON_Parse(responce);
-    //free(responce);
+    free(responce);
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "status");
     if (cJSON_IsTrue(json_type)) {
         json_type = cJSON_GetObjectItemCaseSensitive(j_responce, "count");
-        main_data.contacts = mx_atoi(json_type->valuestring);
+        main_data.contacts = json_type->valueint;
         fill_contact_list(j_responce);
     }
     else 

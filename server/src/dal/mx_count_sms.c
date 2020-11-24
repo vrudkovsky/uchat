@@ -19,7 +19,7 @@ static const char *find_username_id(char *username) { //затычка либы
 
                 if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0 ) {
                     //printf("<--!!!!! Inside search function !!!!->");
-
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,0);
                 }
             }
@@ -76,6 +76,7 @@ static const char *username_1(char *id_chat) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,0), id_chat) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,1);
                 }
             }
@@ -96,6 +97,7 @@ static const char *username_2(char *id_chat) { //затычка либы
 
             while(SQLITE_ROW == sqlite3_step(stmt)) {
                 if (strcmp((const char*)sqlite3_column_text(stmt,0), id_chat) == 0 ) {
+                    rc = sqlite3_finalize(stmt);
                     return (const char*)sqlite3_column_text(stmt,2);
                 }
             }
@@ -143,10 +145,11 @@ int mx_count_sms(char *id_chat) {
 //printf("*************************************username_11 %s\n", username_22);
         arr = count_sms(username_11, username_22);
         //printf("count chaty usera%d\n", r);
+        endDB();
 		return arr;
     
 	//showDB();
     //endDB();
-    return arr;
+    //return arr;
 }
 
