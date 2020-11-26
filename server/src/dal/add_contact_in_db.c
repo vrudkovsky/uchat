@@ -47,16 +47,10 @@ static int find_who_id(char *who) {
 }
 
 bool mx_add_contact(char *who, char *whom) {
-    int who_id;
-    int whom_id;
     bool flag;
 
     startDB();
-
-    who_id = find_who_id(who);
-    whom_id = find_who_id(whom);
-    flag = insertRecord(who_id, whom_id);
-
+    flag = insertRecord(find_who_id(who), find_who_id(whom));
     endDB();
     return flag;
 }

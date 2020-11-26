@@ -4,17 +4,17 @@ static void fill_chat_list(chats_t *chat_node, cJSON *chat, int i) {
     cJSON *array_element;
     cJSON *key;
 
-    key = cJSON_GetObjectItemCaseSensitive(chat, "sender");
+    key = cJSON_GetObjectItemCaseSensitive(chat, "is_owner");
     array_element = cJSON_GetArrayItem(key, i);
-    if (mx_strcmp(array_element->valuestring, main_data.username) == 0) {
+    if (array_element->valueint == 1) {
         chat_node->is_owner = true;
     }
-    else 
+    else
         chat_node->is_owner = false;
 
     key = cJSON_GetObjectItemCaseSensitive(chat, "msg id");
     array_element = cJSON_GetArrayItem(key, i);
-    chat_node->msg_id = mx_atoi(array_element->valuestring);
+    chat_node->msg_id = array_element->valueint;
 
     key = cJSON_GetObjectItemCaseSensitive(chat, "time");
     array_element = cJSON_GetArrayItem(key, i);
@@ -36,18 +36,12 @@ void add_new_chats_in_chats_list(cJSON *chat) {
     char *contact_name;
     contact_t *contact_node = NULL;
 
-    cJSON *first = cJSON_GetObjectItemCaseSensitive(chat, "user 1");
-    cJSON *second = cJSON_GetObjectItemCaseSensitive(chat, "user 2");
-
-    if (mx_strcmp(first->valuestring, main_data.username) == 0) {
-        contact_name = mx_strdup(second->valuestring); 
-    }
-    else 
-        contact_name = mx_strdup(first->valuestring);
-
+    cJSON *first = cJSON_GetObjectItemCaseSensitive(chat, "interlocutor");
+    contact_name = mx_strdup(first->valuestring); 
     contact_node = search_contact_node(contact_name);
+
     first = cJSON_GetObjectItemCaseSensitive(chat, "chat id");
-    contact_node->chat_id = mx_atoi(first->valuestring);
+    contact_node->chat_id = first->valueint;
 
     first = cJSON_GetObjectItemCaseSensitive(chat, "msg count");
 

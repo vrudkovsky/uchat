@@ -54,30 +54,25 @@ char *in_search_mail(char *username);
 
 //download_message_history
 cJSON *download_message_history(cJSON *j_request, cJSON *j_responce);
-int mx_count_sms(char *id_chat);
-char *mx_search_user_1(char *id_chat);
-char *mx_search_user_2(char *id_chat);
-int *mx_get_time(char *who, char *whom, int count_sms);
+int mx_count_chats(char *username);
+int *mx_id_chatss(char *who, int num);
+int mx_count_sms(int chat_id);
+char *mx_search_interlocutor(int id_chat, char *username);
+int *get_msgs_ids(int chat_id, int count_sms);
+int *mx_get_time(int chat_id, int count_sms);
+int *mx_is_msg_owner(char *username, int count_sms, int chat_id);
 char **mx_get_who(char *who, char *whom, int count_sms);
-char **mx_get_sms(char *who, char *whom, int count_sms);
+char **mx_get_msg_text(int chat_id, int count_sms);
 void mx_ceate_username_password_login(void);
-int mx_count_chaty(char *username);
-char **mx_id_chatss(char *who);
-int mx_count_chaty(char *username);
-char **id_sms_arr(char *who, char *whom, int count_sms);
 
 //create chat
-cJSON *create_chat(cJSON *j_request, cJSON *j_responce);
-
-
+cJSON *create_new_chat(cJSON *j_request, cJSON *j_responce);
+int mx_find_chat_with_contact(char *who, char *whom);
+int mx_create_new_chat(char *who, char *whom);
+int mx_create_new_db_chat(char *id, char *username1, char *username2);
 
 void mx_delete_contactt(void);
 void mx_create_new_table(void);
-
-int mx_create_chat(const char *username_1, const char *username_2);
-cJSON *create_chat(cJSON *j_request, cJSON *j_responce);
-
-int mx_create_new_db_chat(char *id, char *username1, char *username2);
 
 cJSON *sms(cJSON *j_request, cJSON *j_responce);
 char *create_sms(char *who, char *whom, char *text, int created_at);

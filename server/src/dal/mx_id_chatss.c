@@ -3,83 +3,99 @@
 #include <sqlite3.h>
 
     sqlite3 *db;
-    sqlite3_stmt* stmt; // строка запроса к БД
-
+    sqlite3_stmt* stmt;
+    sqlite3_stmt* stmt_1;
 
 static void startDB() {
-    char str[1000];
-    // int lenstr=0;
-    if( sqlite3_open("uchat.db", &db)) {
-        printf(str, "Ошибка открытия БД: %s\n", sqlite3_errmsg(db));
-    }
+    if (sqlite3_open("uchat.db", &db))
+        printf("Ошибка открытия БД: %s\n", sqlite3_errmsg(db));
 }
 
 static void endDB(){
     sqlite3_close(db);
 }
 
-
-static const char *find_username_id(char *username) { //затычка либы
+static bool find_user_in_contacts(int id_who, int id_whom) {
     int rc = 0;
-    //printf("\n%s                                 username", username);
-    char zSql[]="SELECT * FROM users";
-    //printf("*** \tShow DB\t ***\n");
-    do
-        {
-            sqlite3_prepare(db, zSql, -1, &stmt, 0);
+    char zSql[]="SELECT * FROM user_contacts";
+    bool flag = false;
 
-            while(SQLITE_ROW == sqlite3_step(stmt)) {
-                //printf("%s\n", sqlite3_column_text(stmt,1));
-
-                if (strcmp((const char*)sqlite3_column_text(stmt,1), username) == 0 ) {
-                    //printf("<--!!!!! Inside search function !!!!->");
-                    rc = sqlite3_finalize(stmt);
-                    return (const char*)sqlite3_column_text(stmt,0);
+    if (id_who != id_whom) {
+        do {
+            sqlite3_prepare(db, zSql, -1, &stmt_1, 0);
+            while(SQLITE_ROW == sqlite3_step(stmt_1)) {
+                if ((sqlite3_column_int(stmt_1,0) == id_who) && (sqlite3_column_int(stmt_1,1) == id_whom)) {
+                    flag = true;
+                    break;
                 }
             }
-            rc = sqlite3_finalize(stmt);
+            rc = sqlite3_finalize(stmt_1);
         }
-    while(rc == SQLITE_SCHEMA); {}
-    return "-1";
+        while(rc == SQLITE_SCHEMA); {}
+    }
+    return flag;
 }
 
-
-static char **mx_id_chaty_user(const char *num_id_who) { //затычка либы
+static int *mx_id_chaty_user(int user_id, int *arr) {
 	int rc = 0;
-    int count = 0;
-    char zSql[]="SELECT * FROM conversations";
-    char **arr_1 = NULL;
-    arr_1 = malloc(sizeof(char *) * (255));
     int i = 0;
-    //printf("*** \tShow DB\t ***\n");
-    do
-        {
-            sqlite3_prepare(db, zSql, -1, &stmt, 0);
+    int count = 0;
+    char zSql[] = "SELECT * FROM conversations";
+    int creator = 0;
+    int acceptor = 0;
 
-            while(SQLITE_ROW == sqlite3_step(stmt)) {
-                if ((strcmp((const char*)sqlite3_column_text(stmt,1), num_id_who) == 0 ) || (strcmp((const char*)sqlite3_column_text(stmt,2), num_id_who) == 0 )){
-                    arr_1[i] = mx_strnew(255);
-                    arr_1[i] = mx_strcpy(arr_1[i], (char*)sqlite3_column_text(stmt,0));
-                    arr_1[i+1] = NULL;
+    do {
+        sqlite3_prepare(db, zSql, -1, &stmt, 0);
+        while (SQLITE_ROW == sqlite3_step(stmt)) {
+            creator = sqlite3_column_int(stmt, 1);
+            acceptor = sqlite3_column_int(stmt, 2);
+            if (creator ==  user_id) {
+                if (find_user_in_contacts(user_id, acceptor)) {
+                    arr[i] = sqlite3_column_int(stmt,0);
                     i++;
                 }
             }
-            rc = sqlite3_finalize(stmt);
+            else if (acceptor ==  user_id) {
+                if (find_user_in_contacts(user_id, creator)) {
+                    arr[i] = sqlite3_column_int(stmt,0);
+                    i++;
+                }
+            }
         }
-    while(rc == SQLITE_SCHEMA); {}
-    return arr_1;
+        rc = sqlite3_finalize(stmt);
+    }
+    while (rc == SQLITE_SCHEMA); {}
+    return arr;
 }
 
+static int find_who_id(char *who) {
+    int rc = 0;
+    int id = -1;
+    char zSql[]= "SELECT * FROM users";
 
-char **mx_id_chatss(char *who) {
-    //printf("who %s\n", who);
+    do {
+        sqlite3_prepare(db, zSql, -1, &stmt, 0);
+        while (SQLITE_ROW == sqlite3_step(stmt)) {
+            if (strcmp((const char*)sqlite3_column_text(stmt,1), who) == 0 ) {
+                id = sqlite3_column_int(stmt, 0);
+                break;
+            }
+        }
+        rc = sqlite3_finalize(stmt);
+    }
+    while(rc == SQLITE_SCHEMA); {}
+    return id;
+}
+
+int *mx_id_chatss(char *who, int num) {
+    int who_id;
+    int *arr = malloc(sizeof(int) * (num + 1));
+    arr[num] = -1;
+
     startDB();
-    char **arr = NULL;
-    arr = malloc(sizeof(char *) * (255));
-    const char *num_id_who = find_username_id(who); //вернули айди пользователя
-	
+    who_id = find_who_id(who);
+    arr = mx_id_chaty_user(who_id, arr);
 
-    arr = mx_id_chaty_user(num_id_who);
     endDB();
     return arr;
 }
