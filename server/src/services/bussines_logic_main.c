@@ -31,7 +31,7 @@ cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_request, "action");
     else if (strcmp(json_type->valuestring, "create chat") == 0) {
         j_responce = create_new_chat(j_request, j_responce);
     }
-    // else if (strcmp(json_type->valuestring, "send message") == 0) { //обработка нового сообщения
+    // else if (strcmp(json_type->valuestring, "send message") == 0) {
     //     j_responce = smsq(j_request, j_responce);
     // }
     // else if (strcmp(json_type->valuestring, "sms") == 0) { //отправить смс

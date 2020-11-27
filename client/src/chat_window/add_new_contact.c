@@ -6,12 +6,8 @@ static void add_new_contact_get_responce() {
     cJSON *add_contact_responce = cJSON_CreateObject();
 
     recv(main_data.sock_fd, responce, 2000, 0);
+    printf("server responce->\n%s\n", responce);
 
-//////////////////////////////////////////////////
-    // cJSON_AddItemToObject(j_test, "status", cJSON_CreateTrue());
-    // responce = cJSON_Print(j_test);
-    // printf("server responce->\n%s\n", responce);
-//////////////////////////////////////////////////
     add_contact_responce = cJSON_Parse(responce);
     free(responce);
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(add_contact_responce, "status");
@@ -42,7 +38,10 @@ static void add_new_contact_send_request(char *username) {
     cJSON_AddItemToObject(add_contact, "who", cJSON_CreateString(main_data.username));
     cJSON_AddItemToObject(add_contact, "whom", cJSON_CreateString(username));
     jdata = cJSON_Print(add_contact);
+
+    printf("client request->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
+
 	cJSON_Delete(add_contact);
     free(jdata);
 }

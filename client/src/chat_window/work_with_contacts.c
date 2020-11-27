@@ -1,5 +1,7 @@
 #include "client.h"
 
+guint interval = 100;
+
 int search_user_in_local_contact_list(char *username) {
     int position = 0;
     bool flag = false;
