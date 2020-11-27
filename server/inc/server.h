@@ -19,7 +19,6 @@
 #include <ifaddrs.h>
 #include <sqlite3.h>
 
-
 //server connect
 void start_error(int argc, char **argv);
 void connection_establisher(unsigned short port);
@@ -65,11 +64,16 @@ char **mx_get_who(char *who, char *whom, int count_sms);
 char **mx_get_msg_text(int chat_id, int count_sms);
 void mx_ceate_username_password_login(void);
 
+//get_chat
+cJSON *get_chat(cJSON *j_request, cJSON *j_responce);
+bool check_chat_by_id(int chat_id);
+
 //create chat
 cJSON *create_new_chat(cJSON *j_request, cJSON *j_responce);
 int mx_find_chat_with_contact(char *who, char *whom);
 int mx_create_new_chat(char *who, char *whom);
 int mx_create_new_db_chat(char *id, char *username1, char *username2);
+
 
 void mx_delete_contactt(void);
 void mx_create_new_table(void);
