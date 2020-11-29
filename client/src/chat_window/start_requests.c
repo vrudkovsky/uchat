@@ -38,7 +38,7 @@ static void print_chat_content(chats_t *chat) {
         printf("is owner:\t%d\n", node->is_owner);
         printf("msg id:\t\t%d\n", node->msg_id);
         printf("time:\t\t%d\n", node->time);
-        printf("msg:\t\t%s\n", node->msg);
+        printf("msg:\t\t%s\n\n", node->msg);
         node = node->next;
     }
 }
@@ -46,7 +46,7 @@ static void print_chat_content(chats_t *chat) {
 void print_contact_list(void) {
     contact_t *node = main_data.contact_list;
     while (node != NULL) {
-        printf("\nusername:\t%s\n", node->username);
+        printf("\n\nusername:\t%s\n", node->username);
         print_chat_content(node->chats);
         node = node->next;
     }
@@ -134,6 +134,7 @@ static void contact_list_get_responce(void) {
 
 void start_requests(void) {
     main_data.contact_list = NULL;
+    main_data.chat_req_list = NULL;
     usleep(100);
     contact_list_send_request();
     usleep(100);

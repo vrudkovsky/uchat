@@ -14,6 +14,9 @@ cJSON *get_chat(cJSON *j_request, cJSON *j_responce) {
     char **msg_text;
     
     if (check_chat_by_id(chat_id)) {
+
+        change_chat_status(chat_id);
+    
         cJSON_AddItemToObject(j_responce, "status", cJSON_CreateTrue());
         cJSON_AddItemToObject(j_responce, "chats count", cJSON_CreateNumber(1));
 
@@ -31,8 +34,10 @@ cJSON *get_chat(cJSON *j_request, cJSON *j_responce) {
         cJSON_AddItemToObject(cJSON_info_chat, "msg id", cJSON_msg_id);
     
         msg_id = get_msgs_ids(chat_id, msg_count);
-        for (int j = 0; j < msg_count; j++)
+        for (int j = 0; j < msg_count; j++) {
             cJSON_AddItemToArray(cJSON_msg_id, cJSON_CreateNumber(msg_id[j]));
+            change_msg_status(msg_id[j]);
+        }
 
 		cJSON_time = cJSON_CreateArray();
         cJSON_AddItemToObject(cJSON_info_chat, "time", cJSON_time);

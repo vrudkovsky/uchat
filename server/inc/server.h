@@ -78,13 +78,31 @@ int mx_create_new_db_chat(char *id, char *username1, char *username2);
 void mx_delete_contactt(void);
 void mx_create_new_table(void);
 
-cJSON *sms(cJSON *j_request, cJSON *j_responce);
-char *create_sms(char *who, char *whom, char *text, int created_at);
+cJSON *updates_main(cJSON *j_request, cJSON *j_responce);
+int insert_new_msg(char *who, char *whom, char *text, int created_at, int chat_id);
 char **mx_id_chats(char *who);
 int count_sms_give(char *username);
-cJSON *sms(cJSON *j_request, cJSON *j_responce);
-cJSON *smsq(cJSON *j_request, cJSON *j_responce);
+cJSON *send_msg(cJSON *j_request, cJSON *j_responce);
 //int mx_create_new_db_chat(void);
+
+
+//new_sms and new chats
+int count_id_new_chats(char *username);
+int count_id_new_sms(char *username);
+int *new_update_msgs_info(char *who, int num);
+int *new_update_chats_info(char *who, int num);
+char *find_message_by_id(int id_message);
+char *find_username_by_id(int user_id); 
+bool change_chat_status(int chat_id);
+bool change_msg_status(int msg_id);
+//delete sms
+bool delete_sms(int id_sms);
+cJSON *mx_delete_sms(cJSON *j_request, cJSON *j_responce);
+
+//update sms
+bool update_sms(int id_sms, char *text_sms);
+cJSON *mx_update_sms(cJSON *j_request, cJSON *j_responce);
+
 #endif
 
 

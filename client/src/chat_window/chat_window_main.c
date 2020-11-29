@@ -1,8 +1,12 @@
 #include "client.h"
 
 gboolean smth_new_loop(gpointer user_data) {
-    printf("test loop -> %s\n", main_data.username);
-    return true;
+
+    updates_logic(main_data.username);
+
+    if (main_data.app_status == 2)
+        return true;
+    return false;
 }
 
 void chat_window_main(void) {

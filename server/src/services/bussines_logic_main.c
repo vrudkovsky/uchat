@@ -4,7 +4,14 @@
 cJSON * bussines_logic_main(cJSON *j_request, cJSON *j_responce) {
 cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_request, "action");
 
-    if (strcmp(json_type->valuestring, "login") == 0) {
+
+    if (strcmp(json_type->valuestring, "update") == 0) {
+        j_responce = updates_main(j_request, j_responce);
+    }
+    else if (strcmp(json_type->valuestring, "send msg") == 0) {
+        j_responce = send_msg(j_request, j_responce);
+    }
+    else if (strcmp(json_type->valuestring, "login") == 0) {
         j_responce = login_user(j_request, j_responce);
     }    
     else if (strcmp(json_type->valuestring, "register") == 0) {
@@ -31,15 +38,11 @@ cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_request, "action");
     else if (strcmp(json_type->valuestring, "create chat") == 0) {
         j_responce = create_new_chat(j_request, j_responce);
     }
-    // else if (strcmp(json_type->valuestring, "send message") == 0) {
-    //     j_responce = smsq(j_request, j_responce);
-    // }
-    // else if (strcmp(json_type->valuestring, "sms") == 0) { //отправить смс
-    //     //j_responce = sms(j_request, j_responce);
-    //     //printf("%s\n", "sms");
-    // }
-
-    //char *jdata = cJSON_Print(j_responce);
-    //printf("\n%s\n", jdata);
+    else if (strcmp(json_type->valuestring, "delete sms") == 0) {
+        j_responce = mx_delete_sms(j_request, j_responce);
+    }
+    else if (strcmp(json_type->valuestring, "update_sms") == 0) {
+        j_responce = mx_update_sms(j_request, j_responce);
+    }
     return j_responce;
 }

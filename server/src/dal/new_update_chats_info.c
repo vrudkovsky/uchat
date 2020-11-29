@@ -1,8 +1,10 @@
+
 #include "server.h" 
 #include <sqlite3.h>
 
-sqlite3 *db;
-sqlite3_stmt* stmt;
+    sqlite3 *db;
+    sqlite3_stmt* stmt;
+    sqlite3_stmt* stmt_1;
 
 static void startDB() {
     if (sqlite3_open("uchat.db", &db))
@@ -13,22 +15,23 @@ static void endDB(){
     sqlite3_close(db);
 }
 
-static int *mx_msg_owner(int user_id, int *arr, int chat_id) {
+static int *mx_id_chaty_user(int user_id, int *arr) {
 	int rc = 0;
     int i = 0;
-    char zSql[]="SELECT * FROM messages";
+    int count = 0;
+    char zSql[] = "SELECT * FROM conversations";
+    int creator = 0;
+    int acceptor = 0;
 
     do {
         sqlite3_prepare(db, zSql, -1, &stmt, 0);
         while (SQLITE_ROW == sqlite3_step(stmt)) {
-            if ((sqlite3_column_int(stmt, 7) == chat_id)  && (sqlite3_column_int(stmt, 5) == 0)) {
-                if (sqlite3_column_int(stmt, 1) == user_id) {
-                    arr[i] = 1;
+                if ((sqlite3_column_int(stmt, 2) ==  user_id) && (sqlite3_column_int(stmt, 3) == 1)) {
+                    arr[i] = sqlite3_column_int(stmt,0);
+                    i++;
+                    arr[i] = sqlite3_column_int(stmt,1);
+                    i++;
                 }
-                else
-                    arr[i] = 0;
-                i++;
-            }
         }
         rc = sqlite3_finalize(stmt);
     }
@@ -55,16 +58,14 @@ static int find_who_id(char *who) {
     return id;
 }
 
-int *mx_is_msg_owner(char *username, int count_sms, int chat_id) {
-    int *arr = malloc(sizeof(int) * (count_sms + 1));
-    int user_id;
-
-    arr[count_sms] = -1;
+int *new_update_chats_info(char *who, int num) {
+    int who_id;
+    int *arr = malloc(sizeof(int) * (num) *2);
 
     startDB();
-    user_id = find_who_id(username);
-    arr = mx_msg_owner(user_id, arr, chat_id);
-    endDB();
+    who_id = find_who_id(who);
+    arr = mx_id_chaty_user(who_id, arr);
 
+    endDB();
     return arr;
 }

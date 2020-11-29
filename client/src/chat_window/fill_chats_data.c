@@ -4,8 +4,9 @@ static void fill_chat_list(chats_t *chat_node, cJSON *chat, int i) {
     cJSON *array_element;
     cJSON *key;
 
-    key = cJSON_GetObjectItemCaseSensitive(chat, "is_owner");
+    key = cJSON_GetObjectItemCaseSensitive(chat, "is owner");
     array_element = cJSON_GetArrayItem(key, i);
+
     if (array_element->valueint == 1) {
         chat_node->is_owner = true;
     }
@@ -47,7 +48,6 @@ void add_new_chats_in_chats_list(cJSON *chat) {
 
     chats_t *last_node = NULL;
     chats_t *tmp_node;
-
 //FIFO STORAGE FOR MESSAGES 
     for (int i = 0; i < first->valueint; i++) {
         last_node = malloc(sizeof(chats_t));

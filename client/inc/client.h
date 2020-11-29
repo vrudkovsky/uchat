@@ -17,6 +17,12 @@
 #include <netdb.h>
 #include <errno.h>
 
+typedef struct chats_request {
+    int chat_id;
+    char *interlocutor;
+    struct chats_request *next;
+}              chat_req_t;
+
 typedef struct chats {
     bool is_owner;
     int msg_id;
@@ -43,6 +49,7 @@ struct main_info {
     short sock_fd;
     int contacts;
     contact_t *contact_list;
+    chat_req_t *chat_req_list;
 }       main_data;
 
 struct start_window {
@@ -148,6 +155,8 @@ void init_contact_row_widgets(contact_row_t *node, char *username, char *initial
 void fill_chats_data(cJSON *responce);
 void add_new_chats_in_chats_list(cJSON *chat);
 contact_t *search_contact_node(char *contact_name);
-void insert_new_message_in_chat(int chat_id, int msg_id, char *sender, int time, char *msg);
+void insert_new_message_in_chat(int chat_id, int msg_id, bool is_owner, int time, char *msg);
+void updates_logic(char *username);
+void insert_new_chat_request(int chat_id, char *interlocutor);
 
 #endif

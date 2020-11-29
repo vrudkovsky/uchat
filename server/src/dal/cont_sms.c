@@ -144,10 +144,9 @@ int count_sms_give(char *username) {
 //printf("*************************************username_11 %s\n", username_22);
         arr = count_sms(username_id);
         //printf("count chaty usera%d\n", r);
-		return arr;
     
 	//showDB();
-    //endDB();
+    endDB();
     return arr;
 }
 

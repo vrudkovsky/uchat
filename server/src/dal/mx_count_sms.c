@@ -21,7 +21,7 @@ static int count_msgs(int chat_id) {
     do  {
         sqlite3_prepare(db, zSql, -1, &stmt, 0);
         while(SQLITE_ROW == sqlite3_step(stmt)) {
-            if (sqlite3_column_int(stmt,7) ==  chat_id)
+            if ((sqlite3_column_int(stmt,7) ==  chat_id) && (sqlite3_column_int(stmt,5) ==  0))
  				count++;
         }
         rc = sqlite3_finalize(stmt);

@@ -14,47 +14,36 @@ static void endDB(){
     sqlite3_close(db);
 }
 
-static bool find_user_in_contacts(int id_who, int id_whom) {
+static bool new_chat_status_active(int chat_id) {
     int rc = 0;
-    char zSql[] = "SELECT * FROM user_contacts";
+    char zSql[] = "SELECT * FROM conversations";
     bool flag = false;
 
-    if (id_who != id_whom) {
-        do {
-            sqlite3_prepare(db, zSql, -1, &stmt_1, 0);
-            while(SQLITE_ROW == sqlite3_step(stmt_1)) {
-                if ((sqlite3_column_int(stmt_1,0) == id_who) && (sqlite3_column_int(stmt_1,1) == id_whom)) {
-                    flag = true;
-                    break;
-                }
+    do {
+        sqlite3_prepare(db, zSql, -1, &stmt_1, 0);
+        while(SQLITE_ROW == sqlite3_step(stmt_1)) {
+            if ((sqlite3_column_int(stmt_1, 0) == chat_id) && (sqlite3_column_int(stmt_1, 3) == 1)) {
+                flag = true;
+                break;
             }
-            rc = sqlite3_finalize(stmt_1);
         }
-        while(rc == SQLITE_SCHEMA); {}
+        rc = sqlite3_finalize(stmt_1);
     }
+    while(rc == SQLITE_SCHEMA); {}
     return flag;
 }
 
-static int count_chats(int user_id) {
+static int count_new_msg(int user_id) {
 	int rc = 0;
     int count = 0;
-    char zSql[] = "SELECT * FROM conversations";
-    int creator = 0;
-    int acceptor = 0;
+    char zSql[] = "SELECT * FROM messages";
 
     do {
         sqlite3_prepare(db, zSql, -1, &stmt, 0);
         while (SQLITE_ROW == sqlite3_step(stmt)) {
-            creator = sqlite3_column_int(stmt, 1);
-            acceptor = sqlite3_column_int(stmt, 2);
-            if (creator ==  user_id) {
-                if (find_user_in_contacts(user_id, acceptor))
+            if ((sqlite3_column_int(stmt, 2) ==  user_id) && (sqlite3_column_int(stmt, 5) == 1)) {
+                if (!new_chat_status_active(sqlite3_column_int(stmt, 7)))
                     count++;
-            }
-            else if (acceptor ==  user_id) {
-                if (find_user_in_contacts(user_id, creator))
-                    if (sqlite3_column_int(stmt, 3) == 0)
-                        count++;
             }
         }
         rc = sqlite3_finalize(stmt);
@@ -66,7 +55,7 @@ static int count_chats(int user_id) {
 static int find_who_id(char *who) {
     int rc = 0;
     int id = -1;
-    char zSql[] = "SELECT * FROM users";
+    char zSql[]= "SELECT * FROM users";
 
     do {
         sqlite3_prepare(db, zSql, -1, &stmt, 0);
@@ -82,13 +71,13 @@ static int find_who_id(char *who) {
     return id;
 }
 
-int mx_count_chats(char *username) {
+int count_id_new_sms(char *username) {
     int count;
     int user_id;
 
 	startDB();
     user_id = find_who_id(username);
-    count = count_chats(user_id);
+    count = count_new_msg(user_id);
     endDB();
 
 	return count;

@@ -44,7 +44,7 @@ cJSON *download_message_history(cJSON *j_request, cJSON *j_responce) {
                 cJSON_AddItemToArray(cJSON_time, cJSON_CreateNumber(msg_time[j]));
 
             cJSON_is_owner = cJSON_CreateArray();
-            cJSON_AddItemToObject(cJSON_info_chat, "is_owner", cJSON_is_owner);
+            cJSON_AddItemToObject(cJSON_info_chat, "is owner", cJSON_is_owner);
             
             is_owner = mx_is_msg_owner(json_type1->valuestring, msg_count, chats_id[i]);
             for (int j = 0; j < msg_count; j++)
