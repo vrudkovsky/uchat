@@ -40,6 +40,27 @@ typedef struct contacts_list {
     struct contacts_list *next;
 }              contact_t;
 
+typedef struct chat_row {
+    GtkWidget *row;
+    GtkWidget *fixed;
+    GtkWidget *username_label;
+    GtkWidget *update_box;
+    GtkWidget *time_label;
+    GtkWidget *you_label;
+    GtkWidget *msg_label;
+    struct contact_widget *next;
+}               chat_row_t;
+
+typedef struct dialog {
+    int last_msg_at;
+    bool last_msg_owner;
+    char *last_msg_text;
+    bool updates;
+    contact_t *user_info;
+    chat_row_t *chat_row;
+    struct dialog *next;
+}              dialog_t;   
+
 struct main_info {
     int app_status;
     char *username;
@@ -48,6 +69,7 @@ struct main_info {
     char *email;
     short sock_fd;
     int contacts;
+    dialog_t *dialogs_list;
     contact_t *contact_list;
     chat_req_t *chat_req_list;
 }       main_data;
@@ -82,6 +104,8 @@ typedef struct contact_widget {
 struct chat_window {
     GtkWidget *ch_window;
     GtkBuilder *builder;
+    GtkWidget *main_user_initials_label;
+    GtkWidget *main_username_label;
     GtkWidget *main_list;
     GtkWidget *chats_row;
     GtkWidget *contacts_row;
@@ -105,6 +129,11 @@ struct chat_window {
 
     GtkStack *main_info_stack;
     GtkWidget *contact_info_empty;
+
+    GtkWidget *use_search_label;
+
+    GtkWidget *chat_list_box;
+    GtkWidget *dont_have_chats_label;
 
     contact_row_t *contact_row_list;
 }       chat;
@@ -133,7 +162,7 @@ struct show_contact_info {
 
 void start_error(int argc, char **argv);
 void connection_establisher(unsigned short port, char *ip_address);
-
+void close_window(void);
 void log_reg_window(void);
 void log_reg_widgets(void);
 void log_reg_actions(void);
@@ -158,5 +187,8 @@ contact_t *search_contact_node(char *contact_name);
 void insert_new_message_in_chat(int chat_id, int msg_id, bool is_owner, int time, char *msg);
 void updates_logic(char *username);
 void insert_new_chat_request(int chat_id, char *interlocutor);
+
+void add_dialog_node_FIFO(contact_t *contact_data);
+chats_t *search_last_msg_node(chats_t *chat);
 
 #endif

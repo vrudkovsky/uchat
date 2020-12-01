@@ -138,9 +138,9 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Aren't you with us, yet?</property>
+                    <property name="label" translatable="yes">Aren't you with us, yet?  </property>
                     <attributes>
-                      <attribute name="font-desc" value="Laksaman 12"/>
+                      <attribute name="font-desc" value="Helvetica Neue 12"/>
                     </attributes>
                   </object>
                   <packing>
@@ -356,9 +356,9 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">    Go back to the</property>
+                    <property name="label" translatable="yes">    Go back to the  </property>
                     <attributes>
-                      <attribute name="font-desc" value="Laksaman 12"/>
+                      <attribute name="font-desc" value="Helvetica Neue 12"/>
                     </attributes>
                   </object>
                   <packing>

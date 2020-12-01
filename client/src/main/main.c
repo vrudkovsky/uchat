@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     while (main_data.app_status != 3)
         switch (main_data.app_status) {
             case 1: log_reg_window(); break;
-            case 2: chat_window_main(); main_data.app_status = 3; break;
+            case 2: chat_window_main(); break;
         }
     return 0;
 }

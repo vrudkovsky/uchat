@@ -88,6 +88,6 @@ void on_send_message_field_activated(GtkButton *b) {
     send_message();
 }
 
-void on_write_message_button_clicked(GtkButton *b) {
+void on_send_message_button_clicked(GtkButton *b) {
     send_message();
 }

@@ -106,4 +106,6 @@ void on_delete_contact_button_clicked(GtkButton *b) {
         gtk_widget_show(contact_info_view.add_contact_button);
         gtk_widget_set_sensitive(contact_info_view.write_message_button, FALSE);
     }
+    if (main_data.contacts == 0)
+        gtk_widget_show(chat.use_search_label);
 }

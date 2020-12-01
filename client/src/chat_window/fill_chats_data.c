@@ -1,5 +1,15 @@
 #include "client.h"
 
+static void fill_start_dialogs_list(int iterator) {
+    contact_t *contact_data = main_data.contact_list;
+    for (int i = 0; i < iterator; i++) {
+        contact_data = contact_data->next;
+    }
+    printf("%s\n", contact_data->username);
+    if (contact_data->chats != NULL)
+        add_dialog_node_FIFO(contact_data);
+}
+
 static void fill_chat_list(chats_t *chat_node, cJSON *chat, int i) {
     cJSON *array_element;
     cJSON *key;
@@ -48,7 +58,7 @@ void add_new_chats_in_chats_list(cJSON *chat) {
 
     chats_t *last_node = NULL;
     chats_t *tmp_node;
-//FIFO STORAGE FOR MESSAGES 
+//FILO STORAGE FOR MESSAGES 
     for (int i = 0; i < first->valueint; i++) {
         last_node = malloc(sizeof(chats_t));
         fill_chat_list(last_node, chat, i);
@@ -64,7 +74,7 @@ void add_new_chats_in_chats_list(cJSON *chat) {
             tmp_node->next = last_node;
         }
     }
-//FILO STORAGE FOR MESSAGES 
+//FIFO STORAGE FOR MESSAGES 
     // chats_t *first_node = NULL;
     // for (int i = 0; i < first->valueint; i++) {
     //     first_node = malloc(sizeof(chats_t));
@@ -91,5 +101,8 @@ void fill_chats_data(cJSON *responce) {
     for (int i = 0; i < chats_count; i++) {
         chat = cJSON_GetArrayItem(json, i);
         add_new_chats_in_chats_list(chat);
+    }
+    for (int i = 0; i < main_data.contacts; i++) {
+        fill_start_dialogs_list(i);
     }
 }

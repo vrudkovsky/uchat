@@ -212,6 +212,7 @@ void work_with_contacts(void) {
 }
 
 void on_find_user_field_activate(GtkEntry *e) {
+    gtk_widget_hide(chat.use_search_label);
     contact_info_view.search_view_is_active = true;
     search_user_data.info->username = (char*)gtk_entry_get_text(e);
 
@@ -221,6 +222,8 @@ void on_find_user_field_activate(GtkEntry *e) {
 }
 
 void on_contact_search_end_button_clicked(GtkButton *b) {
+    if (main_data.contacts == 0)
+        gtk_widget_show(chat.use_search_label);
     gtk_entry_set_text((GtkEntry*)chat.contact_search_entry, "");
     gtk_widget_set_margin_top(chat.contacts_scrolled_window, 0);
     gtk_widget_set_size_request(chat.contacts_scrolled_window, 230, 505);

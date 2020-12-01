@@ -91,13 +91,13 @@ static int create_new_chat(char *username, char *contact_name) {
     return chat_id;
 }
 
-// void on_write_message_button_clicked(GtkButton *b) {
-//     char *username = main_data.username;
-//     char *contact_name = contact_info_view.user_data->username;
-//     contact_t *contact_node = search_contact_node(contact_name);
+void on_write_message_button_clicked(GtkButton *b) {
+    char *username = main_data.username;
+    char *contact_name = contact_info_view.user_data->username;
+    contact_t *contact_node = search_contact_node(contact_name);
 
-//     if (contact_node->chat_id == -1)
-//         contact_node->chat_id = create_new_chat(username, contact_name);
-//     // if (contact_node->chat_id > 0)
-//     //     open_chat_window(contact_name);
-// }
+    if (contact_node->chat_id == -1)
+        contact_node->chat_id = create_new_chat(username, contact_name);
+    // if (contact_node->chat_id > 0)
+    //     open_chat_window(contact_name);
+}

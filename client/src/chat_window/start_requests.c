@@ -135,13 +135,13 @@ static void contact_list_get_responce(void) {
 void start_requests(void) {
     main_data.contact_list = NULL;
     main_data.chat_req_list = NULL;
-    usleep(100);
+    main_data.dialogs_list = NULL;
     contact_list_send_request();
-    usleep(100);
     contact_list_get_responce();
-    usleep(100);
+    if (main_data.contacts > 0)
+        gtk_widget_hide(chat.use_search_label);
     chats_history_send_request();
-    usleep(100);
     chats_history_get_responce();
-    usleep(100);
+    if (!(main_data.dialogs_list == NULL))
+        gtk_widget_hide(chat.dont_have_chats_label);
 }
