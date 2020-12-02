@@ -68,7 +68,7 @@ static void send_message_send_request(char *username, char *contact_name, int ch
     free(jdata);
 }
 
-static void insert_message_widget(void) {
+void insert_message_widget(void) {
     message_widget_t *widget_node = dialog_view.message;
 
     while (widget_node != NULL)
@@ -78,7 +78,7 @@ static void insert_message_widget(void) {
     message_row_constructor(widget_node, dialog_view.user->last_msg_owner, dialog_view.user->last_msg_at, dialog_view.user->last_msg_text);
 }
 
-static void dialog_node_update(dialog_t *dialog, int time, bool is_owner, char *msg) {
+void dialog_node_update(dialog_t *dialog, int time, bool is_owner, char *msg) {
     dialog->last_msg_at = time;
     dialog->last_msg_owner = is_owner;
     dialog->last_msg_text = msg;

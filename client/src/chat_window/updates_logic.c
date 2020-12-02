@@ -16,19 +16,21 @@ static void load_new_msg(cJSON *msg_data) {
     key = cJSON_GetObjectItemCaseSensitive(msg_data, "msg");
 
     insert_new_message_in_chat(chat_id, msg_id, false, time, key->valuestring);
+    dialog_node_update(dialog_view.user, time, false, key->valuestring);
+    insert_message_widget();
 }
 
-static void load_new_chat(cJSON *msg_data) {
-    int chat_id;
-    cJSON *key;
+// static void load_new_chat(cJSON *msg_data) {
+//     int chat_id;
+//     cJSON *key;
 
-    key = cJSON_GetObjectItemCaseSensitive(msg_data, "chat id");
-    chat_id = key->valueint;
+//     key = cJSON_GetObjectItemCaseSensitive(msg_data, "chat id");
+//     chat_id = key->valueint;
 
-    key = cJSON_GetObjectItemCaseSensitive(msg_data, "interlocutor");
+//     key = cJSON_GetObjectItemCaseSensitive(msg_data, "interlocutor");
 
-    insert_new_chat_request(chat_id, key->valuestring);
-}
+//     insert_new_chat_request(chat_id, key->valuestring);
+// }
 
 static void update_parser(cJSON *update_json) {
     int new_msg_count, new_chats_count;
@@ -40,6 +42,7 @@ static void update_parser(cJSON *update_json) {
         key = cJSON_GetObjectItemCaseSensitive(update_json, "new msgs");
         msg_data = cJSON_GetArrayItem(key, i);
         load_new_msg(msg_data);
+        
         //load_new_chat()
     }
 
@@ -48,7 +51,7 @@ static void update_parser(cJSON *update_json) {
     for (int i = 0; i < new_chats_count; i++) {
         key = cJSON_GetObjectItemCaseSensitive(update_json, "new chats");
         msg_data = cJSON_GetArrayItem(key, i);
-        load_new_chat(msg_data);
+        //load_new_chat(msg_data);
     }
 }
 
