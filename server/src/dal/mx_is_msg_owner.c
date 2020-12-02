@@ -13,7 +13,7 @@ static void endDB(){
     sqlite3_close(db);
 }
 
-static int *mx_msg_owner(int user_id, int *arr, int chat_id) {
+static int mx_msg_owner(int user_id, int arr, int msg_id) {
 	int rc = 0;
     int i = 0;
     char zSql[]="SELECT * FROM messages";
@@ -21,12 +21,12 @@ static int *mx_msg_owner(int user_id, int *arr, int chat_id) {
     do {
         sqlite3_prepare(db, zSql, -1, &stmt, 0);
         while (SQLITE_ROW == sqlite3_step(stmt)) {
-            if ((sqlite3_column_int(stmt, 7) == chat_id)  && (sqlite3_column_int(stmt, 5) == 0)) {
+            if (sqlite3_column_int(stmt, 0) == msg_id) {
                 if (sqlite3_column_int(stmt, 1) == user_id) {
-                    arr[i] = 1;
+                    arr = 1;
                 }
                 else
-                    arr[i] = 0;
+                    arr = 0;
                 i++;
             }
         }
@@ -55,7 +55,7 @@ static int find_who_id(char *who) {
     return id;
 }
 
-int *mx_is_msg_owner(char *username, int count_sms, int chat_id) {
+int *mx_is_msg_owner(char *username, int count_sms, int *msg_id) {
     int *arr = malloc(sizeof(int) * (count_sms + 1));
     int user_id;
 
@@ -63,7 +63,8 @@ int *mx_is_msg_owner(char *username, int count_sms, int chat_id) {
 
     startDB();
     user_id = find_who_id(username);
-    arr = mx_msg_owner(user_id, arr, chat_id);
+    for (int i = 0; i < count_sms; i++)
+        arr[i] = mx_msg_owner(user_id, arr[i], msg_id[i]);
     endDB();
 
     return arr;

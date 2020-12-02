@@ -68,26 +68,52 @@ static void send_message_send_request(char *username, char *contact_name, int ch
     free(jdata);
 }
 
-static void send_message(void) {
-    int tmp = 5;
+static void insert_message_widget(void) {
+    message_widget_t *widget_node = dialog_view.message;
 
+    while (widget_node != NULL)
+        widget_node = widget_node->next;
+    widget_node = malloc(sizeof(message_widget_t));
+    widget_node->next = NULL;
+    message_row_constructor(widget_node, dialog_view.user->last_msg_owner, dialog_view.user->last_msg_at, dialog_view.user->last_msg_text);
+}
+
+static void dialog_node_update(dialog_t *dialog, int time, bool is_owner, char *msg) {
+    dialog->last_msg_at = time;
+    dialog->last_msg_owner = is_owner;
+    dialog->last_msg_text = msg;
+    if (is_owner) {
+        dialog->updates = false;
+    }
+    else
+        dialog->updates = false;
+    gtk_label_set_text((GtkLabel*)dialog->chat_row->time_label, time_converter(time, 0));
+    gtk_label_set_text((GtkLabel*)dialog->chat_row->msg_label, msg);
+    //gtk_widget_hide(dialog->chat_row->row);
+}
+
+static void send_message(char *msg) {
     int msg_id;
     int creation_time = time(NULL);
-    char *sender = "mdudnyk";
-    char *recipient = "vbrykov";
-    int chat_id = 13;
-    char *msg = "How are you?";
+    char *sender = main_data.username;
+    char *recipient = dialog_view.user->user_info->username;
+    int chat_id = dialog_view.user->user_info->chat_id;
 
     send_message_send_request(sender, recipient, chat_id, creation_time, msg);
     msg_id = send_message_get_responce();
-    if (tmp != -1)
-        insert_new_message_in_chat(chat_id, tmp, true, creation_time, msg);
+    if (msg_id != -1) {
+        insert_new_message_in_chat(chat_id, msg_id, true, creation_time, msg);
+        dialog_node_update(dialog_view.user, creation_time, true, msg);
+        insert_message_widget();
+    }
 }
 
-void on_send_message_field_activated(GtkButton *b) {
-    send_message();
+void msg_entry_activate(GtkEntry *e) {
+    send_message((char*)gtk_entry_get_text((GtkEntry*)chat.msg_entry));
+    gtk_entry_set_text((GtkEntry*)chat.msg_entry, "");
 }
 
-void on_send_message_button_clicked(GtkButton *b) {
-    send_message();
+void send_button_clicked(GtkButton *b) {
+    send_message((char*)gtk_entry_get_text((GtkEntry*)chat.msg_entry));
+    gtk_entry_set_text((GtkEntry*)chat.msg_entry, "");
 }

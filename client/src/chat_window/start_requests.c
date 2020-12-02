@@ -133,6 +133,7 @@ static void contact_list_get_responce(void) {
 }
 
 void start_requests(void) {
+    dialog_view.message = NULL;
     main_data.contact_list = NULL;
     main_data.chat_req_list = NULL;
     main_data.dialogs_list = NULL;

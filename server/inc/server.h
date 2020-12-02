@@ -55,13 +55,13 @@ char *in_search_mail(char *username);
 cJSON *download_message_history(cJSON *j_request, cJSON *j_responce);
 int mx_count_chats(char *username);
 int *mx_id_chatss(char *who, int num);
-int mx_count_sms(int chat_id);
+int mx_count_sms(int chat_id, char *username);
 char *mx_search_interlocutor(int id_chat, char *username);
-int *get_msgs_ids(int chat_id, int count_sms);
-int *mx_get_time(int chat_id, int count_sms);
-int *mx_is_msg_owner(char *username, int count_sms, int chat_id);
+int *get_msgs_ids(int chat_id, int count_sms, char *username);
+int *mx_get_time(int *msg_id, int count_sms);
+int *mx_is_msg_owner(char *username, int count_sms, int *msg_id);
 char **mx_get_who(char *who, char *whom, int count_sms);
-char **mx_get_msg_text(int chat_id, int count_sms);
+char **mx_get_msg_text(int *msg_id, int count_sms);
 void mx_ceate_username_password_login(void);
 
 //get_chat

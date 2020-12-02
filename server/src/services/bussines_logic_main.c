@@ -32,17 +32,17 @@ cJSON *json_type = cJSON_GetObjectItemCaseSensitive(j_request, "action");
     else if (strcmp(json_type->valuestring, "get chats") == 0) {
         j_responce = download_message_history(j_request, j_responce);
     }
-    else if (strcmp(json_type->valuestring, "get chat") == 0) {
-        j_responce = get_chat(j_request, j_responce);
-    }
+    // else if (strcmp(json_type->valuestring, "get chat") == 0) {
+    //     j_responce = get_chat(j_request, j_responce);
+    // }
     else if (strcmp(json_type->valuestring, "create chat") == 0) {
         j_responce = create_new_chat(j_request, j_responce);
     }
     else if (strcmp(json_type->valuestring, "delete sms") == 0) {
         j_responce = mx_delete_sms(j_request, j_responce);
     }
-    else if (strcmp(json_type->valuestring, "update_sms") == 0) {
-        j_responce = mx_update_sms(j_request, j_responce);
-    }
+    // else if (strcmp(json_type->valuestring, "update_sms") == 0) {
+    //     j_responce = mx_update_sms(j_request, j_responce);
+    // }
     return j_responce;
 }

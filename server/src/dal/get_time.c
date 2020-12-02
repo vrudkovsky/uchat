@@ -13,16 +13,17 @@ static void endDB(){
     sqlite3_close(db);
 }
 
-static int *mx_msgs_time(int *arr, int chat_id) {
+static int mx_msgs_time(int msg_id) {
 	int rc = 0;
     int i = 0;
     char zSql[]="SELECT * FROM messages";
+    int arr = 0;
 
     do {
         sqlite3_prepare(db, zSql, -1, &stmt, 0);
         while (SQLITE_ROW == sqlite3_step(stmt)) {
-            if ((sqlite3_column_int(stmt, 7) == chat_id) && (sqlite3_column_int(stmt, 5) == 0)) {
-                arr[i] = sqlite3_column_int(stmt, 6);
+            if (sqlite3_column_int(stmt, 0) == msg_id) {
+                arr = sqlite3_column_int(stmt, 6);
                 i++;
             }
         }
@@ -33,13 +34,15 @@ static int *mx_msgs_time(int *arr, int chat_id) {
 }
 
 
-int *mx_get_time(int chat_id, int count_sms) {
+int *mx_get_time(int *msg_id, int count_sms) {
     int *arr = malloc(sizeof(int) * (count_sms + 1));
 
     arr[count_sms] = -1;
 
     startDB();
-    arr = mx_msgs_time(arr, chat_id);
+    for (int i = 0; i < count_sms; i++) {
+        arr[i] = mx_msgs_time(msg_id[i]);
+    }
     endDB();
 
     return arr;

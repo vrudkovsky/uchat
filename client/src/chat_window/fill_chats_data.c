@@ -5,7 +5,6 @@ static void fill_start_dialogs_list(int iterator) {
     for (int i = 0; i < iterator; i++) {
         contact_data = contact_data->next;
     }
-    printf("%s\n", contact_data->username);
     if (contact_data->chats != NULL)
         add_dialog_node_FIFO(contact_data);
 }

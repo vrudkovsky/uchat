@@ -126,6 +126,7 @@
                             <property name="height_request">-1</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <signal name="row-activated" handler="chat_list_row_activated" swapped="no"/>
                           </object>
                         </child>
                       </object>
@@ -136,7 +137,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="dont_have_chats_label">
+                  <object class="GtkLabel" id="dont_have">
                     <property name="width_request">-1</property>
                     <property name="height_request">-1</property>
                     <property name="visible">True</property>
@@ -515,6 +516,7 @@
                     <property name="max_length">200</property>
                     <property name="shadow_type">none</property>
                     <property name="caps_lock_warning">False</property>
+                    <signal name="activate" handler="msg_entry_activate" swapped="no"/>
                   </object>
                   <packing>
                     <property name="x">14</property>
@@ -529,10 +531,49 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <signal name="clicked" handler="send_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="x">481</property>
                     <property name="y">506</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="dialog_scrolled_window">
+                    <property name="width_request">560</property>
+                    <property name="height_request">498</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">never</property>
+                    <child>
+                      <object class="GtkViewport" id="dialog_view_port">
+                        <property name="width_request">230</property>
+                        <property name="height_request">-1</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkListBox" id="dialog_list_box">
+                            <property name="width_request">-1</property>
+                            <property name="height_request">-1</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="find_chat_label">
+                    <property name="width_request">-1</property>
+                    <property name="height_request">-1</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Can't find such chat</property>
+                  </object>
+                  <packing>
+                    <property name="x">207</property>
+                    <property name="y">272</property>
                   </packing>
                 </child>
               </object>
@@ -563,7 +604,7 @@
             </attributes>
           </object>
           <packing>
-            <property name="x">1</property>
+            <property name="x">2</property>
             <property name="y">178</property>
           </packing>
         </child>

@@ -12,6 +12,7 @@ gboolean smth_new_loop(gpointer user_data) {
 void chat_window_main(void) {
     gtk_init(NULL, NULL);
 
+    main_data.initials = make_initials_by_username(main_data.username);
     chat_window_init();
     start_requests();
     work_with_contacts();

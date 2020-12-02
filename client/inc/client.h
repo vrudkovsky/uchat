@@ -64,6 +64,7 @@ typedef struct dialog {
 struct main_info {
     int app_status;
     char *username;
+    char *initials;
     char *password;
     char *password_conf;
     char *email;
@@ -72,7 +73,7 @@ struct main_info {
     dialog_t *dialogs_list;
     contact_t *contact_list;
     chat_req_t *chat_req_list;
-}       main_data;
+}      main_data;
 
 struct start_window {
     GtkBuilder *builder;
@@ -114,7 +115,6 @@ struct chat_window {
     GtkWidget *chats_list;
     GtkWidget *contacts_list;
     GtkWidget *empty_list;
-
     GtkWidget *contact_search_entry;
     GtkStack *contact_search_result_stack;
     GtkWidget *contact_search_result_fixed;
@@ -123,17 +123,19 @@ struct chat_window {
     GtkWidget *sorry_find_user_label;
     GtkWidget *contact_search_end_button;
     GtkWidget *contact_search_result_list_box;
-
     GtkWidget *contacts_scrolled_window;
     GtkWidget *contact_list_box;
-
     GtkStack *main_info_stack;
     GtkWidget *contact_info_empty;
-
     GtkWidget *use_search_label;
-
     GtkWidget *chat_list_box;
     GtkWidget *dont_have_chats_label;
+    GtkWidget *chat_search_entry;
+    GtkWidget *chat_info_main;
+    GtkWidget *msg_entry;
+    GtkWidget *send_button;
+    GtkWidget *cant_find_chats_label;
+    GtkWidget *dialog_list_box;
 
     contact_row_t *contact_row_list;
 }       chat;
@@ -159,6 +161,31 @@ struct show_contact_info {
     GtkWidget *delete_contact_button;
     contact_t *user_data;
 }      contact_info_view;
+
+typedef struct message_widget_list {
+    GtkWidget *row;
+
+    GtkWidget *main_box;
+    GtkWidget *avatar_box;
+    GtkWidget *work_box;
+    GtkWidget *message_box;
+    GtkWidget *control_box;
+
+    GtkWidget *initials_label;
+    GtkWidget *msg_label;
+    GtkWidget *time_label;
+
+    struct message_widget_list *next;
+}              message_widget_t;
+
+struct show_dialog_info {
+    GtkWidget *msg_entry;
+    GtkWidget *send_button;
+    int user_num;
+    char *msg_field;
+    dialog_t *user;
+    message_widget_t *message;
+}      dialog_view;
 
 void start_error(int argc, char **argv);
 void connection_establisher(unsigned short port, char *ip_address);
@@ -190,5 +217,7 @@ void insert_new_chat_request(int chat_id, char *interlocutor);
 
 void add_dialog_node_FIFO(contact_t *contact_data);
 chats_t *search_last_msg_node(chats_t *chat);
+char *time_converter(int seconds, short mode);
+void message_row_constructor(message_widget_t *message_gui, bool is_owner, int time, char *msg);
 
 #endif

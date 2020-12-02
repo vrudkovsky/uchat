@@ -16,8 +16,6 @@ static void create_chat_row(dialog_t *dialog, contact_t *user_info, chats_t *cha
     dialog->last_msg_at = lats_msg_node->time;
     if (lats_msg_node->is_owner)
         dialog->last_msg_owner = true;
-
-    row = malloc(sizeof(chat_row_t));
     
     GtkStyleContext *context = NULL; 
 
@@ -25,7 +23,7 @@ static void create_chat_row(dialog_t *dialog, contact_t *user_info, chats_t *cha
     row->fixed = gtk_fixed_new();
     row->update_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     row->username_label = gtk_label_new(user_info->username);
-    row->time_label = gtk_label_new(mx_itoa(lats_msg_node->time));
+    row->time_label = gtk_label_new(time_converter(lats_msg_node->time, 0));
     row->you_label = gtk_label_new("You: ");
     row->msg_label = gtk_label_new(lats_msg_node->msg);
 
@@ -39,8 +37,14 @@ static void create_chat_row(dialog_t *dialog, contact_t *user_info, chats_t *cha
     gtk_fixed_put((GtkFixed*)row->fixed, row->update_box, 14, 10);
     gtk_fixed_put((GtkFixed*)row->fixed, row->time_label, 150, 10);
     gtk_fixed_put((GtkFixed*)row->fixed, row->you_label, 8, 40);
-    gtk_fixed_put((GtkFixed*)row->fixed, row->msg_label, 15, 40);
-    gtk_list_box_insert((GtkListBox*)(chat.chat_list_box), row->row, -1);
+    if (!dialog->last_msg_owner) {
+        gtk_fixed_put((GtkFixed*)row->fixed, row->msg_label, 8, 40);
+    }
+    else {
+        gtk_fixed_put((GtkFixed*)row->fixed, row->msg_label, 35, 40);
+    }
+    
+    gtk_list_box_insert((GtkListBox*)(chat.chat_list_box), row->row, 0);
 
     gtk_widget_set_can_focus(row->row, FALSE);
 
@@ -56,9 +60,8 @@ static void create_chat_row(dialog_t *dialog, contact_t *user_info, chats_t *cha
     gtk_style_context_add_class(context, "update_box");
 
     gtk_widget_show_all(row->row);
-    if (!dialog->last_msg_owner) {
+    if (!dialog->last_msg_owner)
         gtk_widget_hide(row->you_label);
-    }
 }
 
 static void fill_node_with_data(dialog_t *dialog) {
@@ -72,6 +75,7 @@ static void fill_node_with_data(dialog_t *dialog) {
     dialog->updates = false;
     user_info = dialog->user_info;
     chat_info = user_info->chats;
+    dialog->chat_row = malloc(sizeof(chat_row_t));
     row = dialog->chat_row;
     
     create_chat_row(dialog, user_info, chat_info, row);

@@ -1,6 +1,5 @@
 #include "server.h"
-
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+#include <sys/stat.h>
 
 void connection_establisher(unsigned short port) {
     char hostbuffer[256];
@@ -8,7 +7,26 @@ void connection_establisher(unsigned short port) {
     int socket_desc, client_sock, c;
     struct hostent *host_entry;
     struct sockaddr_in server, client;
+    pid_t process_id = 0;
+    pid_t sid = 0;
 
+    process_id = fork();
+    if (process_id < 0) {
+        printf("fork failed!\n");
+        exit(1);
+    }
+    if (process_id > 0) {
+        printf("process_id of child process %d \n", process_id);
+        exit(0);
+    }
+    umask(0);
+    sid = setsid();
+    if(sid < 0)
+        exit(1);
+    close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDERR_FILENO);
+    
     hostname = gethostname(hostbuffer, sizeof(hostbuffer)); 
     host_entry = gethostbyname(hostbuffer);
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -36,4 +54,5 @@ void connection_establisher(unsigned short port) {
     }
     if (client_sock < 0)
         perror("accept failed");
+    
 }
