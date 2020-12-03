@@ -34,6 +34,7 @@ void chat_window_init(void) {
     chat.send_button = GTK_WIDGET(gtk_builder_get_object(chat.builder, "send_button"));
     chat.cant_find_chats_label = GTK_WIDGET(gtk_builder_get_object(chat.builder, "find_chat_label"));
     chat.dialog_list_box = GTK_WIDGET(gtk_builder_get_object(chat.builder, "dialog_list_box"));
+    chat.dialog_scrolled_window = GTK_WIDGET(gtk_builder_get_object(chat.builder, "dialog_scrolled_window"));
 
     contact_stack_info_init();
     gtk_label_set_text(GTK_LABEL(chat.main_username_label), main_data.username);
@@ -49,6 +50,8 @@ void chat_window_init(void) {
     gtk_style_context_add_class(context, "main_list");
     context = gtk_widget_get_style_context((GtkWidget*) chat.contact_search_end_button);
     gtk_style_context_add_class(context, "contact_search_end_button");
+    context = gtk_widget_get_style_context(chat.send_button);
+    gtk_style_context_add_class(context, "send_button");
     gtk_widget_hide(chat.cant_find_chats_label);
 }
 

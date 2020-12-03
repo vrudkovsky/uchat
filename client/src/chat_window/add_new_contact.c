@@ -6,7 +6,7 @@ static void add_new_contact_get_responce() {
     cJSON *add_contact_responce = cJSON_CreateObject();
 
     recv(main_data.sock_fd, responce, 2000, 0);
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 
     add_contact_responce = cJSON_Parse(responce);
     free(responce);
@@ -26,8 +26,8 @@ static void add_new_contact_get_responce() {
             activate_deactivate_all_rows_in_contact_list(false);
         main_data.contacts++;
     }
-    else 
-        printf("%s\n", "can not add this contact");
+    // else 
+    //     printf("%s\n", "can not add this contact");
 }
 
 static void add_new_contact_send_request(char *username) {
@@ -39,7 +39,7 @@ static void add_new_contact_send_request(char *username) {
     cJSON_AddItemToObject(add_contact, "whom", cJSON_CreateString(username));
     jdata = cJSON_Print(add_contact);
 
-    printf("client request->\n%s\n", jdata);
+    // printf("client request->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 
 	cJSON_Delete(add_contact);

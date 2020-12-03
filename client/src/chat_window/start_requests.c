@@ -8,7 +8,7 @@ static void chats_history_send_request(void) {
     cJSON_AddItemToObject(j_contacts, "action", cJSON_CreateString("get chats"));
     cJSON_AddItemToObject(j_contacts, "who", cJSON_CreateString(main_data.username));
     jdata = cJSON_Print(j_contacts);
-    printf("client request ->\n%s\n", jdata);
+    // printf("client request ->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 	cJSON_Delete(j_contacts);
     free(jdata);
@@ -18,7 +18,7 @@ static void chats_history_get_responce(void) {
     char *responce = mx_strnew(2000);
     cJSON *j_responce = cJSON_CreateObject();
     recv(main_data.sock_fd, responce, 2000, 0);
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
     j_responce = cJSON_Parse(responce);
     free(responce);
 
@@ -58,7 +58,7 @@ static void contact_list_send_request(void) {
     cJSON_AddItemToObject(j_contacts, "action", cJSON_CreateString("get contacts"));
     cJSON_AddItemToObject(j_contacts, "who", cJSON_CreateString(main_data.username));
     jdata = cJSON_Print(j_contacts);
-    printf("client request ->\n%s\n", jdata);
+    // printf("client request ->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 	cJSON_Delete(j_contacts);
     free(jdata);
@@ -118,7 +118,7 @@ static void contact_list_get_responce(void) {
     cJSON *j_responce = cJSON_CreateObject();
     recv(main_data.sock_fd, responce, 2000, 0);
 
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 
     j_responce = cJSON_Parse(responce);
     free(responce);

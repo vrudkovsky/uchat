@@ -27,7 +27,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_top">60</property>
-                <property name="label" translatable="yes">LOG IN TO UCHAT</property>
+                <property name="label" translatable="yes">Welcome to YouChat</property>
                 <attributes>
                   <attribute name="font-desc" value="Manjari Bold 30"/>
                   <attribute name="style" value="normal"/>
@@ -138,7 +138,7 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Aren't you with us, yet?  </property>
+                    <property name="label" translatable="yes">Aren't you with us, yet?</property>
                     <attributes>
                       <attribute name="font-desc" value="Helvetica Neue 12"/>
                     </attributes>
@@ -156,7 +156,7 @@
                     <signal name="button-release-event" handler="on_event_button_release_event" swapped="no"/>
                     <child>
                       <object class="GtkButton" id="reg_button">
-                        <property name="label" translatable="no">REGISTER</property>
+                        <property name="label" translatable="no">Register</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -194,7 +194,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_top">60</property>
-                <property name="label" translatable="yes">NEW USER REGISTRATION</property>
+                <property name="label" translatable="yes">New user registration</property>
                 <attributes>
                   <attribute name="font-desc" value="Manjari Bold 25"/>
                   <attribute name="style" value="normal"/>
@@ -374,7 +374,7 @@
                     <signal name="button-release-event" handler="on_event2_button_release_event" swapped="no"/>
                     <child>
                       <object class="GtkButton" id="back_log_in_button">
-                        <property name="label" translatable="yes">LOG IN</property>
+                        <property name="label" translatable="yes">Log in</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>

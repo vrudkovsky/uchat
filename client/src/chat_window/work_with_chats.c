@@ -1,7 +1,8 @@
 #include "client.h"
 
 void message_row_constructor(message_widget_t *message_gui, bool is_owner, int time, char *msg) {
-    GtkStyleContext *context = NULL; 
+    GtkStyleContext *context = NULL;
+    GtkAdjustment *adjust;
 
     message_gui->row = gtk_list_box_row_new();
 
@@ -40,35 +41,42 @@ void message_row_constructor(message_widget_t *message_gui, bool is_owner, int t
 
     gtk_container_add((GtkContainer*)(message_gui->row), message_gui->main_box);
 
-    gtk_widget_set_margin_end(message_gui->main_box, 10);
-    gtk_widget_set_margin_start(message_gui->main_box, 10);
+    gtk_widget_set_margin_end(message_gui->row, 13);
+    gtk_widget_set_margin_start(message_gui->row, 13);
+    gtk_widget_set_margin_top(message_gui->row, 8);
+    gtk_widget_set_margin_end(message_gui->main_box, 3);
+    gtk_widget_set_margin_start(message_gui->main_box, 3);
     gtk_widget_set_margin_end(message_gui->msg_label, 10);
     gtk_widget_set_margin_start(message_gui->msg_label, 10);
     gtk_widget_set_margin_end(message_gui->time_label, 10);
     gtk_widget_set_margin_start(message_gui->time_label, 10);
     gtk_widget_set_margin_bottom(message_gui->time_label, 7);
 
-    if (!is_owner) {
+    if (is_owner) {
         gtk_widget_set_halign(message_gui->avatar_box, GTK_ALIGN_START);
         gtk_widget_set_halign(message_gui->time_label, GTK_ALIGN_START);
         gtk_widget_set_halign(message_gui->msg_label, GTK_ALIGN_START);
         gtk_widget_set_halign(message_gui->row, GTK_ALIGN_START);
+        context = gtk_widget_get_style_context(message_gui->message_box);
+        gtk_style_context_add_class(context, "message_box_owner");
+        context = gtk_widget_get_style_context(message_gui->row);
+        gtk_style_context_add_class(context, "message_row_owner");
     }
     else {
         gtk_widget_set_halign(message_gui->avatar_box, GTK_ALIGN_END);
         gtk_widget_set_halign(message_gui->time_label, GTK_ALIGN_END);
         gtk_widget_set_halign(message_gui->msg_label, GTK_ALIGN_END);
-        gtk_widget_set_halign(message_gui->row, GTK_ALIGN_END);        
+        gtk_widget_set_halign(message_gui->row, GTK_ALIGN_END);
+        context = gtk_widget_get_style_context(message_gui->message_box);
+        gtk_style_context_add_class(context, "message_box");
+        context = gtk_widget_get_style_context(message_gui->row);
+        gtk_style_context_add_class(context, "message_row");      
     }
 
     gtk_list_box_insert((GtkListBox*)(chat.dialog_list_box), message_gui->row, -1);
 
     gtk_widget_set_can_focus(message_gui->row, FALSE);
 
-    context = gtk_widget_get_style_context(message_gui->row);
-    gtk_style_context_add_class(context, "message_row");
-    context = gtk_widget_get_style_context(message_gui->message_box);
-    gtk_style_context_add_class(context, "message_box");
     context = gtk_widget_get_style_context(message_gui->msg_label);
     gtk_style_context_add_class(context, "message_label");
     context = gtk_widget_get_style_context( message_gui->time_label);
@@ -79,6 +87,8 @@ void message_row_constructor(message_widget_t *message_gui, bool is_owner, int t
     gtk_style_context_add_class(context, "message_avatar_box");
 
     gtk_widget_show_all(message_gui->row);
+    adjust = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(chat.dialog_scrolled_window));
+    gtk_adjustment_set_value(adjust, 100000);
 }
 
 static void show_message_widgets(void) {

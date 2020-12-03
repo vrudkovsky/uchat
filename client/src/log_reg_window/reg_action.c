@@ -3,7 +3,7 @@
 static void registration_check_logic(void) {
     int result = reg_request();
     switch (result) {
-        case  1:  gtk_label_set_text(GTK_LABEL(log_reg.reg_error_lable), "you have been registered and logged in"); break;
+        case  1:  gtk_label_set_text(GTK_LABEL(log_reg.reg_error_lable), "you have been registered"); break;
         case -1:  gtk_label_set_text(GTK_LABEL(log_reg.reg_error_lable), "please, fill all fields"); break;
         case -2:  gtk_label_set_text(GTK_LABEL(log_reg.reg_error_lable), "invalid input characters"); break;
         case -3:  gtk_label_set_text(GTK_LABEL(log_reg.reg_error_lable), "invalid email format"); break;

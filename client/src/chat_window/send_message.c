@@ -35,7 +35,7 @@ static int send_message_get_responce() {
     cJSON *create_new_chat = cJSON_CreateObject();
 
     recv(main_data.sock_fd, responce, 2000, 0);
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 
     create_new_chat = cJSON_Parse(responce);
     free(responce);
@@ -62,7 +62,7 @@ static void send_message_send_request(char *username, char *contact_name, int ch
     jdata = cJSON_Print(send_message);
 
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
-    printf("client request->\n%s\n", jdata);
+    // printf("client request->\n%s\n", jdata);
 
 	cJSON_Delete(send_message);
     free(jdata);
@@ -79,32 +79,41 @@ void insert_message_widget(void) {
 }
 
 void dialog_node_update(dialog_t *dialog, int time, bool is_owner, char *msg) {
+    // GtkStyleContext *context = NULL; 
+    // context = gtk_widget_get_style_context(dialog->chat_row->update_box);
     dialog->last_msg_at = time;
     dialog->last_msg_owner = is_owner;
     dialog->last_msg_text = msg;
-    if (is_owner) {
-        dialog->updates = false;
-    }
-    else
-        dialog->updates = false;
+    // if (!is_owner) {
+    //     gtk_style_context_add_class(context, "update_box_active");
+    // } 
+    // else 
+    //     gtk_style_context_add_class(context, "update_box_inactive");
     gtk_label_set_text((GtkLabel*)dialog->chat_row->time_label, time_converter(time, 0));
     gtk_label_set_text((GtkLabel*)dialog->chat_row->msg_label, msg);
-    //gtk_widget_hide(dialog->chat_row->row);
+    if (!is_owner) {
+        gtk_widget_hide(dialog->chat_row->you_label);
+    }
+    else {
+        gtk_widget_show(dialog->chat_row->you_label);
+    }
 }
 
 static void send_message(char *msg) {
-    int msg_id;
-    int creation_time = time(NULL);
-    char *sender = main_data.username;
-    char *recipient = dialog_view.user->user_info->username;
-    int chat_id = dialog_view.user->user_info->chat_id;
+    if (mx_strlen(msg) > 0) {
+        int msg_id;
+        int creation_time = time(NULL);
+        char *sender = main_data.username;
+        char *recipient = dialog_view.user->user_info->username;
+        int chat_id = dialog_view.user->user_info->chat_id;
 
-    send_message_send_request(sender, recipient, chat_id, creation_time, msg);
-    msg_id = send_message_get_responce();
-    if (msg_id != -1) {
-        insert_new_message_in_chat(chat_id, msg_id, true, creation_time, msg);
-        dialog_node_update(dialog_view.user, creation_time, true, msg);
-        insert_message_widget();
+        send_message_send_request(sender, recipient, chat_id, creation_time, msg);
+        msg_id = send_message_get_responce();
+        if (msg_id != -1) {
+            insert_new_message_in_chat(chat_id, msg_id, true, creation_time, msg);
+            dialog_node_update(dialog_view.user, creation_time, true, msg);
+            insert_message_widget();
+        }
     }
 }
 

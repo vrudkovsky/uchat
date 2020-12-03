@@ -144,7 +144,7 @@ static void find_user_get_responce() {
 //     cJSON_AddItemToObject(j_test, "in contact list", cJSON_CreateFalse());
 //     cJSON_AddItemToObject(j_test, "email", cJSON_CreateString("janbek@gmail.com"));
 //     responce = cJSON_Print(j_test);
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 // //////////////////////////////////////////////////
 //     j_responce = cJSON_Parse(responce);
     free(responce);
@@ -167,7 +167,7 @@ static void find_user_send_request(char *username) {
     cJSON_AddItemToObject(j_contacts, "who", cJSON_CreateString(main_data.username));
     cJSON_AddItemToObject(j_contacts, "whom", cJSON_CreateString(username));
     jdata = cJSON_Print(j_contacts);
-    printf("client request->\n%s\n", jdata);
+    // printf("client request->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 	cJSON_Delete(j_contacts);
     free(jdata);

@@ -3,6 +3,7 @@
 static void load_new_msg(cJSON *msg_data) {
     int chat_id, msg_id, time;
     cJSON *key;
+    dialog_t *dialog_node = NULL;
 
     key = cJSON_GetObjectItemCaseSensitive(msg_data, "chat id");
     chat_id = key->valueint;
@@ -16,8 +17,18 @@ static void load_new_msg(cJSON *msg_data) {
     key = cJSON_GetObjectItemCaseSensitive(msg_data, "msg");
 
     insert_new_message_in_chat(chat_id, msg_id, false, time, key->valuestring);
-    dialog_node_update(dialog_view.user, time, false, key->valuestring);
-    insert_message_widget();
+
+    if (dialog_view.user->user_info->chat_id == chat_id) {
+        dialog_node_update(dialog_view.user, time, false, key->valuestring);       
+        insert_message_widget();
+    }
+    else {      
+        dialog_node = main_data.dialogs_list;
+        while (dialog_node->user_info->chat_id != chat_id) {
+            dialog_node = dialog_node->next;
+        }
+        dialog_node_update(dialog_node, time, false, key->valuestring);
+    }
 }
 
 // static void load_new_chat(cJSON *msg_data) {
@@ -42,7 +53,6 @@ static void update_parser(cJSON *update_json) {
         key = cJSON_GetObjectItemCaseSensitive(update_json, "new msgs");
         msg_data = cJSON_GetArrayItem(key, i);
         load_new_msg(msg_data);
-        
         //load_new_chat()
     }
 
@@ -65,7 +75,7 @@ static void update_send_request(char *username) {
 
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 
-    printf("client request->\n%s\n", jdata);
+    // printf("client request->\n%s\n", jdata);
 
 	cJSON_Delete(get_update);
     free(jdata);
@@ -76,7 +86,7 @@ static void update_get_responce(void) {
     cJSON *j_responce = cJSON_CreateObject();
 
     recv(main_data.sock_fd, responce, 2000, 0);
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 
     j_responce = cJSON_Parse(responce);
     free(responce);

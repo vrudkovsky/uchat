@@ -42,9 +42,13 @@ typedef struct contacts_list {
 
 typedef struct chat_row {
     GtkWidget *row;
+    GtkWidget *main_box;
+    GtkWidget *top_box;
     GtkWidget *fixed;
-    GtkWidget *username_label;
     GtkWidget *update_box;
+    GtkWidget *time_box;
+    GtkWidget *msg_box;
+    GtkWidget *username_label;
     GtkWidget *time_label;
     GtkWidget *you_label;
     GtkWidget *msg_label;
@@ -90,6 +94,8 @@ struct start_window {
     GtkWidget *password_reg_create_field;
     GtkWidget *password_reg_conf_field;
     GtkWidget *reg_error_lable;
+    GtkWidget *back_log_in_button;
+    GtkWidget *reg_button;
     GtkWidget *reg_log_button;
 }      log_reg;
 
@@ -136,6 +142,7 @@ struct chat_window {
     GtkWidget *send_button;
     GtkWidget *cant_find_chats_label;
     GtkWidget *dialog_list_box;
+    GtkWidget *dialog_scrolled_window;
 
     contact_row_t *contact_row_list;
 }       chat;

@@ -61,14 +61,14 @@ static bool delete_contact_get_responce() {
     cJSON *delete_contact_responce = cJSON_CreateObject();
 
     recv(main_data.sock_fd, responce, 2000, 0);
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 
     delete_contact_responce = cJSON_Parse(responce);
     free(responce);
     cJSON *json_type = cJSON_GetObjectItemCaseSensitive(delete_contact_responce, "status");
     if (cJSON_IsTrue(json_type))
         return true;
-    printf("%s\n", "can not delete this contact");
+    // printf("%s\n", "can not delete this contact");
     return false;
 }
 
@@ -81,7 +81,7 @@ static void delete_contact_send_request(char *username) {
     cJSON_AddItemToObject(delete_contact, "whom", cJSON_CreateString(username));
     jdata = cJSON_Print(delete_contact);
 
-    printf("client request->\n%s\n", jdata);
+    // printf("client request->\n%s\n", jdata);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 
 	cJSON_Delete(delete_contact);

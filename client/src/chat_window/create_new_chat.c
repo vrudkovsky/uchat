@@ -5,7 +5,7 @@ static bool get_chat_get_responce(void) {
     cJSON *j_responce = cJSON_CreateObject();
 
     recv(main_data.sock_fd, responce, 2000, 0);
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 
     j_responce = cJSON_Parse(responce);
     free(responce);
@@ -31,7 +31,7 @@ static void get_chat_send_request(char *username, int chat_id) {
 
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 
-    printf("client request->\n%s\n", jdata);
+    // printf("client request->\n%s\n", jdata);
 
 	cJSON_Delete(get_chat);
     free(jdata);
@@ -44,7 +44,7 @@ static int create_new_chat_get_responce() {
 
     recv(main_data.sock_fd, responce, 2000, 0);
 
-    printf("server responce->\n%s\n", responce);
+    // printf("server responce->\n%s\n", responce);
 
     create_new_chat = cJSON_Parse(responce);
     free(responce);
@@ -76,7 +76,7 @@ static void create_new_chat_send_request(char *username, char *contact_name) {
     jdata = cJSON_Print(create_new_chat);
     write(main_data.sock_fd, jdata, mx_strlen(jdata));
 
-    printf("client request->\n%s\n", jdata);
+    // printf("client request->\n%s\n", jdata);
 
 	cJSON_Delete(create_new_chat);
     free(jdata);
