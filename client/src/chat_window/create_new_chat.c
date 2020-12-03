@@ -91,13 +91,30 @@ static int create_new_chat(char *username, char *contact_name) {
     return chat_id;
 }
 
+static void open_chat_window(contact_t *contact_node) {
+    dialog_t *dialog = main_data.dialogs_list;
+
+    gtk_stack_set_visible_child(chat.chats_contacts_stack, chat.chats_list);
+
+    if (contact_node->chats != NULL) {
+        while (dialog->user_info->chat_id != contact_node->chat_id)
+            dialog = dialog->next;
+        dialog_view.user = dialog;
+        gtk_list_box_select_row((GtkListBox*)chat.chat_list_box, (GtkListBoxRow*)dialog->chat_row->row);
+        show_dialog_info();
+    }
+    gtk_stack_set_visible_child(chat.main_info_stack, chat.chat_info_main);
+
+}
+
 void on_write_message_button_clicked(GtkButton *b) {
     char *username = main_data.username;
     char *contact_name = contact_info_view.user_data->username;
     contact_t *contact_node = search_contact_node(contact_name);
 
-    if (contact_node->chat_id == -1)
-        contact_node->chat_id = create_new_chat(username, contact_name);
-    // if (contact_node->chat_id > 0)
-    //     open_chat_window(contact_name);
+    if (contact_node->chat_id == -1) {
+        return;
+    }
+    if (contact_node->chat_id > 0)
+        open_chat_window(contact_node);
 }

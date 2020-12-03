@@ -3,6 +3,8 @@
 void message_row_constructor(message_widget_t *message_gui, bool is_owner, int time, char *msg) {
     GtkStyleContext *context = NULL;
     GtkAdjustment *adjust;
+    adjust = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(chat.dialog_scrolled_window));
+    gtk_adjustment_set_value(adjust, 100000);
 
     message_gui->row = gtk_list_box_row_new();
 
@@ -87,8 +89,7 @@ void message_row_constructor(message_widget_t *message_gui, bool is_owner, int t
     gtk_style_context_add_class(context, "message_avatar_box");
 
     gtk_widget_show_all(message_gui->row);
-    adjust = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(chat.dialog_scrolled_window));
-    gtk_adjustment_set_value(adjust, 100000);
+
 }
 
 static void show_message_widgets(void) {
@@ -136,7 +137,7 @@ static void clean_message_widgets(void) {
     dialog_view.message = NULL;
 }
 
-static void show_dialog_info(void) {
+void show_dialog_info(void) {
     if (dialog_view.message != NULL)
         clean_message_widgets();
     if (dialog_view.message == NULL)

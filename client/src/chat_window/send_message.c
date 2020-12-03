@@ -99,7 +99,7 @@ void dialog_node_update(dialog_t *dialog, int time, bool is_owner, char *msg) {
     }
 }
 
-static void send_message(char *msg) {
+void send_message(char *msg) {
     if (mx_strlen(msg) > 0) {
         int msg_id;
         int creation_time = time(NULL);

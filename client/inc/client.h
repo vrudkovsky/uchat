@@ -228,5 +228,7 @@ char *time_converter(int seconds, short mode);
 void message_row_constructor(message_widget_t *message_gui, bool is_owner, int time, char *msg);
 void dialog_node_update(dialog_t *dialog, int time, bool is_owner, char *msg);
 void insert_message_widget(void);
+void show_dialog_info(void);
+void send_message(char *msg);
 
 #endif

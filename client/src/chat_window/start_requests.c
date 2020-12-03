@@ -46,7 +46,7 @@ static void print_chat_content(chats_t *chat) {
 void print_contact_list(void) {
     contact_t *node = main_data.contact_list;
     while (node != NULL) {
-        printf("\n\nusername:\t%s\n", node->username);
+        // printf("\n\nusername:\t%s\n", node->username);
         print_chat_content(node->chats);
         node = node->next;
     }
