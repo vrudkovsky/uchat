@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.2 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkWindow" id="login_window">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">YouChat</property>
+    <property name="window_position">center-always</property>
+    <property name="default_width">800</property>
+    <property name="default_height">500</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkStack" id="stack">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="transition_duration">500</property>
+        <property name="transition_type">slide-left-right</property>
+        <child>
+          <object class="GtkBox" id="box_1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_top">60</property>
+                <property name="label" translatable="yes">Welcome to YouChat</property>
+                <attributes>
+                  <attribute name="font-desc" value="Manjari Bold 30"/>
+                  <attribute name="style" value="normal"/>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="username_log_field">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">center</property>
+                <property name="margin_top">100</property>
+                <property name="max_length">20</property>
+                <property name="max_width_chars">20</property>
+                <property name="xalign">0.53</property>
+                <property name="shadow_type">etched-in</property>
+                <property name="caps_lock_warning">False</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+                <property name="secondary_icon_sensitive">False</property>
+                <property name="placeholder_text" translatable="yes">username</property>
+                <signal name="activate" handler="on_username_field_activate" swapped="no"/>
+                <signal name="changed" handler="on_username_field_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="password_log_field">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">center</property>
+                <property name="margin_top">10</property>
+                <property name="margin_bottom">4</property>
+                <property name="max_length">20</property>
+                <property name="visibility">False</property>
+                <property name="invisible_char">•</property>
+                <property name="max_width_chars">20</property>
+                <property name="xalign">0.49</property>
+                <property name="shadow_type">etched-in</property>
+                <property name="progress_pulse_step">0</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+                <property name="placeholder_text" translatable="yes">password</property>
+                <signal name="activate" handler="on_password_field_activate" swapped="no"/>
+                <signal name="changed" handler="on_password_field_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="login_error_lable">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="justify">fill</property>
+                <property name="single_line_mode">True</property>
+                <property name="track_visited_links">False</property>
+                <attributes>
+                  <attribute name="font-desc" value="AnjaliOldLipi 10"/>
+                  <attribute name="style" value="normal"/>
+                  <attribute name="weight" value="ultralight"/>
+                  <attribute name="foreground" value="#efef29292929"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="log_in_button">
+                <property name="label" translatable="yes">Log in</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="margin_top">6</property>
+                <signal name="clicked" handler="on_log_in_button_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="margin_top">135</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Aren't you with us, yet?</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Helvetica Neue 12"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEventBox" id="event">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <signal name="button-release-event" handler="on_event_button_release_event" swapped="no"/>
+                    <child>
+                      <object class="GtkButton" id="reg_button">
+                        <property name="label" translatable="no">Register</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_bottom">0</property>
+                        <property name="relief">none</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">5</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="name">page0</property>
+            <property name="title" translatable="yes">page0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="box_2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_top">60</property>
+                <property name="label" translatable="yes">New user registration</property>
+                <attributes>
+                  <attribute name="font-desc" value="Manjari Bold 25"/>
+                  <attribute name="style" value="normal"/>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="username_reg_field">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">center</property>
+                <property name="margin_top">55</property>
+                <property name="max_length">20</property>
+                <property name="max_width_chars">20</property>
+                <property name="xalign">0.5</property>
+                <property name="shadow_type">etched-in</property>
+                <property name="caps_lock_warning">False</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+                <property name="secondary_icon_sensitive">False</property>
+                <property name="placeholder_text" translatable="yes">username</property>
+                <signal name="activate" handler="on_username_reg_field_activate" swapped="no"/>
+                <signal name="changed" handler="on_username_reg_field_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="email_reg_field">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">center</property>
+                <property name="margin_top">10</property>
+                <property name="margin_bottom">1</property>
+                <property name="max_length">20</property>
+                <property name="visibility">True</property>
+                <property name="max_width_chars">20</property>
+                <property name="xalign">0.47999998927116394</property>
+                <property name="shadow_type">etched-in</property>
+                <property name="progress_pulse_step">0</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+                <property name="placeholder_text" translatable="yes">email</property>
+                <signal name="activate" handler="on_email_reg_field_activate" swapped="no"/>
+                <signal name="changed" handler="on_email_reg_field_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="password_reg_create_field">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">center</property>
+                <property name="margin_top">9</property>
+                <property name="margin_bottom">4</property>
+                <property name="max_length">20</property>
+                <property name="visibility">False</property>
+                <property name="invisible_char">•</property>
+                <property name="max_width_chars">20</property>
+                <property name="xalign">0.5</property>
+                <property name="shadow_type">etched-in</property>
+                <property name="progress_pulse_step">0</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+                <property name="placeholder_text" translatable="yes">create password</property>
+                <signal name="activate" handler="on_password_reg_field_activate" swapped="no"/>
+                <signal name="changed" handler="on_password_reg_field_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="password_reg_conf_field">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">center</property>
+                <property name="margin_top">7</property>
+                <property name="margin_bottom">4</property>
+                <property name="max_length">20</property>
+                <property name="visibility">False</property>
+                <property name="invisible_char">•</property>
+                <property name="max_width_chars">20</property>
+                <property name="xalign">0.5</property>
+                <property name="shadow_type">etched-in</property>
+                <property name="progress_pulse_step">0</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+                <property name="placeholder_text" translatable="yes">confirm password</property>
+                <signal name="activate" handler="on_password_reg_conf_field_activate" swapped="no"/>
+                <signal name="changed" handler="on_password_reg_conf_field_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="reg_error_lable">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_bottom">6</property>
+                <property name="justify">fill</property>
+                <property name="single_line_mode">True</property>
+                <property name="track_visited_links">False</property>
+                <attributes>
+                  <attribute name="font-desc" value="AnjaliOldLipi 10"/>
+                  <attribute name="style" value="normal"/>
+                  <attribute name="weight" value="ultralight"/>
+                  <attribute name="foreground" value="#efef29292929"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="reg_log_button">
+                <property name="label" translatable="yes">       Register &amp; Log In      </property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <signal name="clicked" handler="on_reg_log_button_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">6</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="margin_top">97</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">    Go back to the  </property>
+                    <attributes>
+                      <attribute name="font-desc" value="Helvetica Neue 12"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEventBox" id="event2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <signal name="button-release-event" handler="on_event2_button_release_event" swapped="no"/>
+                    <child>
+                      <object class="GtkButton" id="back_log_in_button">
+                        <property name="label" translatable="yes">Log in</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_top">0</property>
+                        <property name="relief">none</property>
+                        <property name="always_show_image">True</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">8</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="name">page1</property>
+            <property name="title" translatable="yes">page1</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
